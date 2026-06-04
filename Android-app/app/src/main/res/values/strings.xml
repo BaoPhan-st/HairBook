@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HairBook</string>
+    <string name="login">Đăng nhập</string>
+    <string name="register">Đăng ký</string>
+    <string name="email">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="full_name">Họ và tên</string>
+    <string name="phone">Số điện thoại</string>
+    <string name="home">Trang chủ</string>
+    <string name="book">Đặt lịch</string>
+    <string name="history">Lịch sử</string>
+    <string name="ai_chat">AI Chat</string>
+    <string name="profile">Hồ sơ</string>
+</resources>

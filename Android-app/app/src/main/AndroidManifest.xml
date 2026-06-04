@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="HairBook"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.HairBook"
+        android:usesCleartextTraffic="true">
+
+        <!-- Launcher -->
+        <activity
+            android:name=".activity.LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <!-- Main hub (after login) -->
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="false"/>
+
+        <!-- TV2: Register -->
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:exported="false"/>
+
+        <!-- TV3: Booking -->
+        <activity
+            android:name=".activity.BookingActivity"
+            android:exported="false"/>
+
+        <!-- Profile -->
+        <activity
+            android:name=".activity.ProfileActivity"
+            android:exported="false"/>
+
+        <!-- AI Chat -->
+        <activity
+            android:name=".activity.AIChatActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+
+    </application>
+
+</manifest>
