@@ -1,186 +1,182 @@
 [
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\drawable_bg_online_dot.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\drawable\\bg_online_dot.xml"
+        "merged": "com.haircut.app-merged_res-48:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.haircut.app-main-50:/mipmap-xxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\mipmap-hdpi\\ic_launcher.webp"
+        "merged": "com.haircut.app-merged_res-48:/layout_activity_booking.xml.flat",
+        "source": "com.haircut.app-main-50:/layout/activity_booking.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+        "merged": "com.haircut.app-merged_res-48:/drawable_bg_input_rounded.xml.flat",
+        "source": "com.haircut.app-main-50:/drawable/bg_input_rounded.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\drawable_bg_send_button.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\drawable\\bg_send_button.xml"
+        "merged": "com.haircut.app-merged_res-48:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.haircut.app-main-50:/mipmap-anydpi-v26/ic_launcher_round.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\layout_activity_main.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\activity_main.xml"
+        "merged": "com.haircut.app-merged_res-48:/drawable_bg_input_bar.xml.flat",
+        "source": "com.haircut.app-main-50:/drawable/bg_input_bar.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\layout_fragment_history.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\fragment_history.xml"
+        "merged": "com.haircut.app-merged_res-48:/layout_item_chat_bot.xml.flat",
+        "source": "com.haircut.app-main-50:/layout/item_chat_bot.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\mipmap-xxhdpi\\ic_launcher.webp"
+        "merged": "com.haircut.app-merged_res-48:/drawable_bg_send_button.xml.flat",
+        "source": "com.haircut.app-main-50:/drawable/bg_send_button.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
+        "merged": "com.haircut.app-merged_res-48:/drawable_bg_time_slot.xml.flat",
+        "source": "com.haircut.app-main-50:/drawable/bg_time_slot.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\layout_activity_register.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\activity_register.xml"
+        "merged": "com.haircut.app-merged_res-48:/drawable_bg_chat_header.xml.flat",
+        "source": "com.haircut.app-main-50:/drawable/bg_chat_header.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\layout_item_booking.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\item_booking.xml"
+        "merged": "com.haircut.app-merged_res-48:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.haircut.app-main-50:/drawable/ic_launcher_foreground.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\drawable_bg_status_chip.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\drawable\\bg_status_chip.xml"
+        "merged": "com.haircut.app-merged_res-48:/layout_fragment_home.xml.flat",
+        "source": "com.haircut.app-main-50:/layout/fragment_home.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\mipmap-xxxhdpi\\ic_launcher.webp"
+        "merged": "com.haircut.app-merged_res-48:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.haircut.app-main-50:/mipmap-xhdpi/ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\layout_activity_booking.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\activity_booking.xml"
+        "merged": "com.haircut.app-merged_res-48:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.haircut.app-main-50:/mipmap-xxxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\drawable_bg_barber_avatar.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\drawable\\bg_barber_avatar.xml"
+        "merged": "com.haircut.app-merged_res-48:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.haircut.app-main-50:/mipmap-xxxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\drawable_bg_card_rounded.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\drawable\\bg_card_rounded.xml"
+        "merged": "com.haircut.app-merged_res-48:/drawable_bg_barber_avatar.xml.flat",
+        "source": "com.haircut.app-main-50:/drawable/bg_barber_avatar.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\drawable_bg_time_slot.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\drawable\\bg_time_slot.xml"
+        "merged": "com.haircut.app-merged_res-48:/layout_activity_main.xml.flat",
+        "source": "com.haircut.app-main-50:/layout/activity_main.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\drawable_bg_input_rounded.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\drawable\\bg_input_rounded.xml"
+        "merged": "com.haircut.app-merged_res-48:/layout_item_booking.xml.flat",
+        "source": "com.haircut.app-main-50:/layout/item_booking.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\mipmap-xxhdpi\\ic_launcher_round.webp"
+        "merged": "com.haircut.app-merged_res-48:/layout_item_chat_user.xml.flat",
+        "source": "com.haircut.app-main-50:/layout/item_chat_user.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\drawable_bg_chat_header.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\drawable\\bg_chat_header.xml"
+        "merged": "com.haircut.app-merged_res-48:/layout_activity_profile.xml.flat",
+        "source": "com.haircut.app-main-50:/layout/activity_profile.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\drawable_bg_chat_bot.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\drawable\\bg_chat_bot.xml"
+        "merged": "com.haircut.app-merged_res-48:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.haircut.app-main-50:/mipmap-anydpi-v26/ic_launcher.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\layout_fragment_home.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\fragment_home.xml"
+        "merged": "com.haircut.app-merged_res-48:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.haircut.app-main-50:/mipmap-mdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\layout_activity_profile.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\activity_profile.xml"
+        "merged": "com.haircut.app-merged_res-48:/layout_activity_login.xml.flat",
+        "source": "com.haircut.app-main-50:/layout/activity_login.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\drawable_bg_chat_user.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\drawable\\bg_chat_user.xml"
+        "merged": "com.haircut.app-merged_res-48:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.haircut.app-main-50:/mipmap-xxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\layout_item_chat_bot.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\item_chat_bot.xml"
+        "merged": "com.haircut.app-merged_res-48:/drawable_bg_status_chip.xml.flat",
+        "source": "com.haircut.app-main-50:/drawable/bg_status_chip.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\menu_bottom_nav_menu.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\menu\\bottom_nav_menu.xml"
+        "merged": "com.haircut.app-merged_res-48:/drawable_bg_online_dot.xml.flat",
+        "source": "com.haircut.app-main-50:/drawable/bg_online_dot.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\drawable_bg_button_primary.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\drawable\\bg_button_primary.xml"
+        "merged": "com.haircut.app-merged_res-48:/drawable_bg_logo_circle.xml.flat",
+        "source": "com.haircut.app-main-50:/drawable/bg_logo_circle.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\mipmap-xhdpi\\ic_launcher.webp"
+        "merged": "com.haircut.app-merged_res-48:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.haircut.app-main-50:/mipmap-mdpi/ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\drawable_bg_logo_circle.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\drawable\\bg_logo_circle.xml"
+        "merged": "com.haircut.app-merged_res-48:/layout_activity_register.xml.flat",
+        "source": "com.haircut.app-main-50:/layout/activity_register.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\layout_item_service.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\item_service.xml"
+        "merged": "com.haircut.app-merged_res-48:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.haircut.app-main-50:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.haircut.app-merged_res-48:/drawable_nav_item_color.xml.flat",
+        "source": "com.haircut.app-main-50:/drawable/nav_item_color.xml"
+    },
+    {
+        "merged": "com.haircut.app-merged_res-48:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.haircut.app-main-50:/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.haircut.app-merged_res-48:/layout_item_time_slot.xml.flat",
+        "source": "com.haircut.app-main-50:/layout/item_time_slot.xml"
+    },
+    {
+        "merged": "com.haircut.app-merged_res-48:/layout_item_service.xml.flat",
+        "source": "com.haircut.app-main-50:/layout/item_service.xml"
+    },
+    {
+        "merged": "com.haircut.app-merged_res-48:/drawable_bg_chat_user.xml.flat",
+        "source": "com.haircut.app-main-50:/drawable/bg_chat_user.xml"
+    },
+    {
+        "merged": "com.haircut.app-merged_res-48:/drawable_bg_ai_avatar.xml.flat",
+        "source": "com.haircut.app-main-50:/drawable/bg_ai_avatar.xml"
+    },
+    {
+        "merged": "com.haircut.app-merged_res-48:/drawable_bg_button_primary.xml.flat",
+        "source": "com.haircut.app-main-50:/drawable/bg_button_primary.xml"
+    },
+    {
+        "merged": "com.haircut.app-merged_res-48:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.haircut.app-main-50:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.haircut.app-merged_res-48:/layout_fragment_history.xml.flat",
+        "source": "com.haircut.app-main-50:/layout/fragment_history.xml"
     },
     {
         "merged": "com.haircut.app-merged_res-48:/layout_activity_ai_chat.xml.flat",
         "source": "com.haircut.app-main-50:/layout/activity_ai_chat.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\mipmap-mdpi\\ic_launcher.webp"
+        "merged": "com.haircut.app-merged_res-48:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.haircut.app-main-50:/mipmap-hdpi/ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\layout_item_time_slot.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\item_time_slot.xml"
+        "merged": "com.haircut.app-merged_res-48:/drawable_bg_chat_bot.xml.flat",
+        "source": "com.haircut.app-main-50:/drawable/bg_chat_bot.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\layout_item_barber.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\item_barber.xml"
+        "merged": "com.haircut.app-merged_res-48:/menu_bottom_nav_menu.xml.flat",
+        "source": "com.haircut.app-main-50:/menu/bottom_nav_menu.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\layout_activity_ai_chat.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\activity_ai_chat.xml"
+        "merged": "com.haircut.app-merged_res-48:/layout_item_barber.xml.flat",
+        "source": "com.haircut.app-main-50:/layout/item_barber.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\drawable_nav_item_color.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\drawable\\nav_item_color.xml"
+        "merged": "com.haircut.app-merged_res-48:/drawable_bg_card_rounded.xml.flat",
+        "source": "com.haircut.app-main-50:/drawable/bg_card_rounded.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\drawable_ic_launcher_foreground.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\drawable\\ic_launcher_foreground.xml"
-    },
-    {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\drawable_bg_avatar.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\drawable\\bg_avatar.xml"
-    },
-    {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\mipmap-anydpi-v26\\ic_launcher.xml"
-    },
-    {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\drawable_bg_ai_avatar.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\drawable\\bg_ai_avatar.xml"
-    },
-    {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\layout_item_chat_user.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\item_chat_user.xml"
-    },
-    {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\mipmap-mdpi\\ic_launcher_round.webp"
-    },
-    {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\mipmap-hdpi\\ic_launcher_round.webp"
-    },
-    {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\mipmap-xhdpi\\ic_launcher_round.webp"
-    },
-    {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\drawable_bg_input_bar.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\drawable\\bg_input_bar.xml"
-    },
-    {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\layout_activity_login.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\activity_login.xml"
-    },
-    {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-merged_res-48:\\drawable_ic_launcher_background.xml.flat",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\drawable\\ic_launcher_background.xml"
+        "merged": "com.haircut.app-merged_res-48:/drawable_bg_avatar.xml.flat",
+        "source": "com.haircut.app-main-50:/drawable/bg_avatar.xml"
     }
 ]

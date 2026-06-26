@@ -1,62 +1,58 @@
 [
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-mergeDebugResources-47:\\layout\\fragment_history.xml",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\fragment_history.xml"
+        "merged": "com.haircut.app-mergeDebugResources-47:/layout/item_booking.xml",
+        "source": "com.haircut.app-main-50:/layout/item_booking.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-mergeDebugResources-47:\\layout\\fragment_home.xml",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\fragment_home.xml"
+        "merged": "com.haircut.app-mergeDebugResources-47:/layout/activity_login.xml",
+        "source": "com.haircut.app-main-50:/layout/activity_login.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-mergeDebugResources-47:\\layout\\activity_booking.xml",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\activity_booking.xml"
+        "merged": "com.haircut.app-mergeDebugResources-47:/layout/item_chat_user.xml",
+        "source": "com.haircut.app-main-50:/layout/item_chat_user.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-mergeDebugResources-47:\\layout\\item_chat_bot.xml",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\item_chat_bot.xml"
+        "merged": "com.haircut.app-mergeDebugResources-47:/layout/activity_register.xml",
+        "source": "com.haircut.app-main-50:/layout/activity_register.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-mergeDebugResources-47:\\layout\\activity_register.xml",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\activity_register.xml"
+        "merged": "com.haircut.app-mergeDebugResources-47:/layout/item_service.xml",
+        "source": "com.haircut.app-main-50:/layout/item_service.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-mergeDebugResources-47:\\layout\\activity_profile.xml",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\activity_profile.xml"
+        "merged": "com.haircut.app-mergeDebugResources-47:/layout/activity_booking.xml",
+        "source": "com.haircut.app-main-50:/layout/activity_booking.xml"
+    },
+    {
+        "merged": "com.haircut.app-mergeDebugResources-47:/layout/activity_main.xml",
+        "source": "com.haircut.app-main-50:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.haircut.app-mergeDebugResources-47:/layout/item_barber.xml",
+        "source": "com.haircut.app-main-50:/layout/item_barber.xml"
     },
     {
         "merged": "com.haircut.app-mergeDebugResources-47:/layout/activity_ai_chat.xml",
         "source": "com.haircut.app-main-50:/layout/activity_ai_chat.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-mergeDebugResources-47:\\layout\\activity_login.xml",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\activity_login.xml"
+        "merged": "com.haircut.app-mergeDebugResources-47:/layout/item_chat_bot.xml",
+        "source": "com.haircut.app-main-50:/layout/item_chat_bot.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-mergeDebugResources-47:\\layout\\item_service.xml",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\item_service.xml"
+        "merged": "com.haircut.app-mergeDebugResources-47:/layout/fragment_home.xml",
+        "source": "com.haircut.app-main-50:/layout/fragment_home.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-mergeDebugResources-47:\\layout\\item_booking.xml",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\item_booking.xml"
+        "merged": "com.haircut.app-mergeDebugResources-47:/layout/item_time_slot.xml",
+        "source": "com.haircut.app-main-50:/layout/item_time_slot.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-mergeDebugResources-47:\\layout\\activity_main.xml",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\activity_main.xml"
+        "merged": "com.haircut.app-mergeDebugResources-47:/layout/activity_profile.xml",
+        "source": "com.haircut.app-main-50:/layout/activity_profile.xml"
     },
     {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-mergeDebugResources-47:\\layout\\item_barber.xml",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\item_barber.xml"
-    },
-    {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-mergeDebugResources-47:\\layout\\item_time_slot.xml",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\item_time_slot.xml"
-    },
-    {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-mergeDebugResources-47:\\layout\\item_chat_user.xml",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\item_chat_user.xml"
-    },
-    {
-        "merged": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-mergeDebugResources-47:\\layout\\activity_ai_chat.xml",
-        "source": "C:\\Users\\User\\.gradle\\daemon\\8.2\\com.haircut.app-main-50:\\layout\\activity_ai_chat.xml"
+        "merged": "com.haircut.app-mergeDebugResources-47:/layout/fragment_history.xml",
+        "source": "com.haircut.app-main-50:/layout/fragment_history.xml"
     }
 ]

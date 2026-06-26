@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_time_slot"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="09:00"
+    android:textSize="13sp"
+    android:textColor="#7B1FA2"
+    android:background="@drawable/bg_time_slot"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:layout_margin="4dp"
+    android:gravity="center"/>
