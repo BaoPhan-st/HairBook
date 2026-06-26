@@ -10,6 +10,8 @@ import com.haircut.app.model.LoginRequest;
 import com.haircut.app.model.RegisterRequest;
 import com.haircut.app.model.ServiceModel;
 import com.haircut.app.model.UserModel;
+import com.haircut.app.model.BarberRequest;
+import com.haircut.app.model.BarberBookingModel;
 
 import java.util.List;
 
@@ -41,6 +43,21 @@ public interface ApiService {
         @Path("id") Long barberId,
         @Query("date") String date
     );
+
+    @GET("barbers/{id}")
+    Call<BarberModel> getBarberById(@Path("id") Long id);
+
+    @POST("barbers")
+    Call<BarberModel> createBarber(@Body BarberRequest body);
+
+    @PUT("barbers/{id}")
+    Call<BarberModel> updateBarber(@Path("id") Long id, @Body BarberRequest body);
+
+    @DELETE("barbers/{id}")
+    Call<Void> deleteBarber(@Path("id") Long id);
+
+    @GET("barbers/{id}/bookings")
+    Call<List<BarberBookingModel>> getBarberBookings(@Path("id") Long id, @Query("date") String date);
 
     // ---- BOOKINGS ----
     @POST("bookings")
