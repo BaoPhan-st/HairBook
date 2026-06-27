@@ -26,6 +26,11 @@ public class JwtUtil {
         return extractClaim(token, Claims::getSubject);
     }
 
+    // Lấy role từ token
+    public String extractRole(String token) {
+        return extractAllClaims(token).get("role", String.class);
+    }
+
     // Lấy ngày hết hạn
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
@@ -53,9 +58,16 @@ public class JwtUtil {
         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
-    // Tạo token mới
+    // Tạo token (backward-compatible, không có role)
     public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
+        return createToken(claims, username);
+    }
+
+    // Tạo token với role claim
+    public String generateToken(String username, String role) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", role);
         return createToken(claims, username);
     }
 
