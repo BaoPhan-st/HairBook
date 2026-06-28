@@ -39,7 +39,7 @@ public class BarberManagementActivity extends AppCompatActivity {
         tvEmpty = findViewById(R.id.tvEmpty);
         FloatingActionButton fab = findViewById(R.id.fabAddBarber);
 
-        adapter = new BarberAdapter(barbers, new BarberAdapter.OnBarberActionListener() {
+        adapter = new BarberAdapter(barbers, R.layout.item_barber_management, new BarberAdapter.OnBarberActionListener() {
             @Override
             public void onEdit(BarberModel barber) {
                 Intent i = new Intent(BarberManagementActivity.this, BarberFormActivity.class);
