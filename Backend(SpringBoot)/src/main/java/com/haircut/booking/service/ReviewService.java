@@ -5,7 +5,9 @@ import com.haircut.booking.entity.Review;
 import com.haircut.booking.entity.User;
 import com.haircut.booking.repository.BookingRepository;
 import com.haircut.booking.repository.ReviewRepository;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -55,10 +57,10 @@ public class ReviewService {
 
     private Map<String, Object> toDto(Review r) {
         return Map.of(
-                "id",        r.getId(),
+                "id", r.getId(),
                 "bookingId", r.getBooking().getId(),
-                "rating",    r.getRating(),
-                "comment",   r.getComment() != null ? r.getComment() : "",
+                "rating", r.getRating(),
+                "comment", r.getComment() != null ? r.getComment() : "",
                 "createdAt", r.getCreatedAt().toString()
         );
     }

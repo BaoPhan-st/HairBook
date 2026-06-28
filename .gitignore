@@ -1,0 +1,15 @@
+# IDE
+.idea
+*.iml
+
+# Build output
+/Backend(SpringBoot)/target
+/Android-app/app/build
+/Android-app/build
+*.class
+
+# Zip files
+*.zip
+
+# Local config
+local.properties

@@ -2,8 +2,10 @@ package com.haircut.booking.service;
 
 import com.haircut.booking.entity.User;
 import com.haircut.booking.repository.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -11,14 +13,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
-/**
- * Gửi FCM push notification đến thiết bị Android.
- *
- * Cần thêm vào application.properties:
- *   fcm.server-key=YOUR_FCM_SERVER_KEY
- *
- * Lấy Server Key: Firebase Console → Project Settings → Cloud Messaging → Server key
- */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -32,10 +26,6 @@ public class NotificationService {
     private final UserRepository userRepository;
     private final RestTemplate restTemplate;
 
-    /**
-     * Lưu FCM token của user vào DB (cần thêm field fcmToken vào User entity).
-     * Hiện tại log ra để test — uncomment khi đã thêm field.
-     */
     public void saveFcmToken(String email, String fcmToken) {
         userRepository.findByEmail(email).ifPresent(user -> {
             // user.setFcmToken(fcmToken);
@@ -44,14 +34,6 @@ public class NotificationService {
         });
     }
 
-    /**
-     * Gửi notification đến 1 thiết bị theo FCM token.
-     *
-     * @param fcmToken  token của thiết bị
-     * @param title     tiêu đề notification
-     * @param body      nội dung
-     * @param data      extra data (có thể null)
-     */
     public void sendToDevice(String fcmToken, String title, String body, Map<String, String> data) {
         if (fcmServerKey == null || fcmServerKey.isEmpty()) {
             log.warn("FCM server key chưa được cấu hình — bỏ qua gửi notification");
@@ -68,7 +50,7 @@ public class NotificationService {
 
         Map<String, Object> notification = Map.of(
                 "title", title,
-                "body",  body
+                "body", body
         );
 
         Map<String, Object> payload = data != null
@@ -85,9 +67,6 @@ public class NotificationService {
         }
     }
 
-    /**
-     * Gửi nhắc lịch hẹn — gọi từ scheduler hoặc sau khi booking được CONFIRMED.
-     */
     public void sendBookingReminder(String fcmToken, String barberName,
                                     String serviceName, String time) {
         sendToDevice(

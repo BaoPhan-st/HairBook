@@ -1,8 +1,10 @@
 package com.haircut.booking.controller;
 
 import com.haircut.booking.service.PaymentService;
+
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,17 +16,14 @@ import java.util.Map;
 @RequestMapping("/api/payments")
 @RequiredArgsConstructor
 public class PaymentController {
-
     private final PaymentService paymentService;
-
     @Data
     public static class PaymentRequest {
-        private Long   bookingId;
-        private String method;      // "VNPAY" | "MOMO"
+        private Long bookingId;
+        private String method;
         private String returnUrl;
     }
 
-    /** POST /api/payments/create — tạo link thanh toán */
     @PostMapping("/create")
     public ResponseEntity<?> createPayment(
             @RequestBody PaymentRequest req,
@@ -41,15 +40,11 @@ public class PaymentController {
         }
     }
 
-    /**
-     * GET /api/payments/callback — VNPay/MoMo redirect về sau khi thanh toán.
-     * Redirect lại app qua deeplink hairbook://payment?status=success&orderId=xxx
-     */
     @GetMapping("/callback")
     public ResponseEntity<Void> paymentCallback(@RequestParam Map<String, String> params) {
         try {
             Map<String, Object> result = paymentService.handleCallback(params);
-            String status  = result.get("status").toString();
+            String status = result.get("status").toString();
             String orderId = result.get("orderId").toString();
 
             String deeplink = "hairbook://payment?status="
@@ -66,7 +61,6 @@ public class PaymentController {
         }
     }
 
-    /** GET /api/payments/status/{orderId} — kiểm tra trạng thái */
     @GetMapping("/status/{orderId}")
     public ResponseEntity<?> getPaymentStatus(@PathVariable String orderId) {
         try {
