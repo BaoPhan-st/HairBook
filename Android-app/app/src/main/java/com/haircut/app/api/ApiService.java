@@ -15,6 +15,10 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.*;
+import com.haircut.app.model.ReviewRequest;
+import com.haircut.app.model.ReviewModel;
+import com.haircut.app.model.PaymentRequest;
+import com.haircut.app.model.PaymentResponse;
 
 public interface ApiService {
 
@@ -55,4 +59,18 @@ public interface ApiService {
     // ---- AI CHAT ----
     @POST("ai/chat")
     Call<ChatResponse> sendChatMessage(@Body ChatRequest request);
+
+    // ---- REVIEW ----
+    @POST("reviews")
+    Call<ReviewModel> submitReview(@Body ReviewRequest request);
+
+    @GET("reviews/booking/{bookingId}")
+    Call<ReviewModel> getReviewByBooking(@Path("bookingId") Long bookingId);
+
+    // ---- PAYMENT ----
+    @POST("payments/create")
+    Call<PaymentResponse> createPayment(@Body PaymentRequest request);
+
+    @GET("payments/status/{orderId}")
+    Call<PaymentResponse> getPaymentStatus(@Path("orderId") String orderId);
 }

@@ -3103,6 +3103,7 @@ drawable abc_textfield_search_activated_mtrl_alpha
 drawable abc_textfield_search_default_mtrl_alpha
 drawable abc_textfield_search_material
 drawable abc_vector_test
+drawable activity_review
 drawable avd_hide_password
 drawable avd_show_password
 drawable bg_ai_avatar
@@ -3113,6 +3114,7 @@ drawable bg_card_rounded
 drawable bg_chat_bot
 drawable bg_chat_header
 drawable bg_chat_user
+drawable bg_edittext_rounded
 drawable bg_input_bar
 drawable bg_input_rounded
 drawable bg_logo_circle
@@ -3133,6 +3135,7 @@ drawable design_ic_visibility
 drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
+drawable ic_arrow_back
 drawable ic_arrow_back_black_24
 drawable ic_arrow_down_24dp
 drawable ic_call_answer
@@ -3338,10 +3341,13 @@ id btn_cancel
 id btn_confirm_booking
 id btn_login
 id btn_logout
+id btn_momo
 id btn_profile
 id btn_rebook
 id btn_register
 id btn_send
+id btn_submit_review
+id btn_vnpay
 id buttonPanel
 id cache_measures
 id calendar_view
@@ -3424,6 +3430,7 @@ id end
 id endToStart
 id enterAlways
 id enterAlwaysCollapsed
+id et_comment
 id et_confirm_password
 id et_email
 id et_full_name
@@ -3628,6 +3635,7 @@ id progress_bar
 id progress_circular
 id progress_horizontal
 id radio
+id rating_bar
 id ratio
 id rectangles
 id recycler_view
@@ -3759,6 +3767,7 @@ id transition_position
 id transition_scene_layoutid_cache
 id transition_transform
 id triangle
+id tv_amount
 id tv_barber_available
 id tv_barber_name
 id tv_barber_rating
@@ -3773,9 +3782,11 @@ id tv_login
 id tv_message
 id tv_name_value
 id tv_note
+id tv_payment_status
 id tv_phone_value
 id tv_price
 id tv_register
+id tv_review_title
 id tv_see_all_barbers
 id tv_see_all_services
 id tv_service_duration
@@ -3930,8 +3941,10 @@ layout activity_ai_chat
 layout activity_booking
 layout activity_login
 layout activity_main
+layout activity_payment
 layout activity_profile
 layout activity_register
+layout activity_review
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog

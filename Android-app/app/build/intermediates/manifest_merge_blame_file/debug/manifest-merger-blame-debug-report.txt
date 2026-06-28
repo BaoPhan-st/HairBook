@@ -9,184 +9,226 @@
 9        android:targetSdkVersion="34" />
 10
 11    <uses-permission android:name="android.permission.INTERNET" />
-11-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:4:5-66
-11-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:4:22-64
+11-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:4:5-66
+11-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:4:22-64
 12    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-12-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:5:5-78
-12-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:5:22-76
-13
-14    <permission
-14-->[androidx.core:core:1.12.0] C:\Users\User\.gradle\caches\transforms-3\de8c3b838232e943fc8a6a53f2c25d4a\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
-15        android:name="com.haircut.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-15-->[androidx.core:core:1.12.0] C:\Users\User\.gradle\caches\transforms-3\de8c3b838232e943fc8a6a53f2c25d4a\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
-16        android:protectionLevel="signature" />
-16-->[androidx.core:core:1.12.0] C:\Users\User\.gradle\caches\transforms-3\de8c3b838232e943fc8a6a53f2c25d4a\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
+12-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:5:5-78
+12-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:5:22-76
+13    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+13-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:6:5-80
+13-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:6:22-78
+14    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+14-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:7:5-76
+14-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:7:22-74
+15    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+15-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:8:5-78
+15-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:8:22-76
+16    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+16-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:9:5-73
+16-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:9:22-71
 17
-18    <uses-permission android:name="com.haircut.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-18-->[androidx.core:core:1.12.0] C:\Users\User\.gradle\caches\transforms-3\de8c3b838232e943fc8a6a53f2c25d4a\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
-18-->[androidx.core:core:1.12.0] C:\Users\User\.gradle\caches\transforms-3\de8c3b838232e943fc8a6a53f2c25d4a\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
-19
-20    <application
-20-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:7:5-52:19
-21        android:allowBackup="true"
-21-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:8:9-35
-22        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-22-->[androidx.core:core:1.12.0] C:\Users\User\.gradle\caches\transforms-3\de8c3b838232e943fc8a6a53f2c25d4a\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
-23        android:debuggable="true"
-24        android:extractNativeLibs="false"
-25        android:icon="@mipmap/ic_launcher"
-25-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:9:9-43
-26        android:label="HairBook"
-26-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:10:9-33
-27        android:roundIcon="@mipmap/ic_launcher_round"
-27-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:11:9-54
-28        android:supportsRtl="true"
-28-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:12:9-35
-29        android:testOnly="true"
-30        android:theme="@style/Theme.HairBook"
-30-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:13:9-46
-31        android:usesCleartextTraffic="true" >
-31-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:14:9-44
-32
-33        <!-- Launcher -->
-34        <activity
-34-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:17:9-24:20
-35            android:name="com.haircut.app.activity.LoginActivity"
-35-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:18:13-51
-36            android:exported="true" >
-36-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:19:13-36
-37            <intent-filter>
-37-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:20:13-23:29
-38                <action android:name="android.intent.action.MAIN" />
-38-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:21:17-68
-38-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:21:25-66
-39
-40                <category android:name="android.intent.category.LAUNCHER" />
-40-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:22:17-76
-40-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:22:27-74
-41            </intent-filter>
-42        </activity>
-43
-44        <!-- Main hub (after login) -->
+18    <permission
+18-->[androidx.core:core:1.12.0] C:\Users\aiten\caches\transforms-3\de8c3b838232e943fc8a6a53f2c25d4a\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
+19        android:name="com.haircut.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+19-->[androidx.core:core:1.12.0] C:\Users\aiten\caches\transforms-3\de8c3b838232e943fc8a6a53f2c25d4a\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
+20        android:protectionLevel="signature" />
+20-->[androidx.core:core:1.12.0] C:\Users\aiten\caches\transforms-3\de8c3b838232e943fc8a6a53f2c25d4a\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
+21
+22    <uses-permission android:name="com.haircut.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+22-->[androidx.core:core:1.12.0] C:\Users\aiten\caches\transforms-3\de8c3b838232e943fc8a6a53f2c25d4a\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
+22-->[androidx.core:core:1.12.0] C:\Users\aiten\caches\transforms-3\de8c3b838232e943fc8a6a53f2c25d4a\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
+23
+24    <application
+24-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:11:5-70:19
+25        android:allowBackup="true"
+25-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:12:9-35
+26        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+26-->[androidx.core:core:1.12.0] C:\Users\aiten\caches\transforms-3\de8c3b838232e943fc8a6a53f2c25d4a\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
+27        android:debuggable="true"
+28        android:extractNativeLibs="false"
+29        android:icon="@mipmap/ic_launcher"
+29-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:13:9-43
+30        android:label="HairBook"
+30-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:14:9-33
+31        android:roundIcon="@mipmap/ic_launcher_round"
+31-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:15:9-54
+32        android:supportsRtl="true"
+32-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:16:9-35
+33        android:testOnly="true"
+34        android:theme="@style/Theme.HairBook"
+34-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:17:9-46
+35        android:usesCleartextTraffic="true" >
+35-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:18:9-44
+36        <activity
+36-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:20:9-27:20
+37            android:name="com.haircut.app.activity.LoginActivity"
+37-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:21:13-51
+38            android:exported="true" >
+38-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:22:13-36
+39            <intent-filter>
+39-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:23:13-26:29
+40                <action android:name="android.intent.action.MAIN" />
+40-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:24:17-68
+40-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:24:25-66
+41
+42                <category android:name="android.intent.category.LAUNCHER" />
+42-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:25:17-76
+42-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:25:27-74
+43            </intent-filter>
+44        </activity>
 45        <activity
-45-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:27:9-29:39
+45-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:29:9-31:39
 46            android:name="com.haircut.app.activity.MainActivity"
-46-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:28:13-50
+46-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:30:13-50
 47            android:exported="false" />
-47-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:29:13-37
-48
-49        <!-- TV2: Register -->
-50        <activity
-50-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:32:9-34:39
-51            android:name="com.haircut.app.activity.RegisterActivity"
-51-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:33:13-54
-52            android:exported="false" />
-52-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:34:13-37
-53
-54        <!-- TV3: Booking -->
-55        <activity
-55-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:37:9-39:39
-56            android:name="com.haircut.app.activity.BookingActivity"
-56-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:38:13-53
-57            android:exported="false" />
-57-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:39:13-37
-58
-59        <!-- Profile -->
-60        <activity
-60-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:42:9-44:39
-61            android:name="com.haircut.app.activity.ProfileActivity"
-61-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:43:13-53
-62            android:exported="false" />
-62-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:44:13-37
-63
-64        <!-- AI Chat -->
-65        <activity
-65-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:47:9-50:57
-66            android:name="com.haircut.app.activity.AIChatActivity"
-66-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:48:13-52
-67            android:exported="false"
-67-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:49:13-37
-68            android:windowSoftInputMode="adjustResize" />
-68-->C:\Users\User\Downloads\Mobi\HairBook\Android-app\app\src\main\AndroidManifest.xml:50:13-55
-69
-70        <provider
-70-->[androidx.emoji2:emoji2:1.2.0] C:\Users\User\.gradle\caches\transforms-3\6db5aa862a49de8667f2a7b9b0bf2022\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
-71            android:name="androidx.startup.InitializationProvider"
-71-->[androidx.emoji2:emoji2:1.2.0] C:\Users\User\.gradle\caches\transforms-3\6db5aa862a49de8667f2a7b9b0bf2022\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:25:13-67
-72            android:authorities="com.haircut.app.androidx-startup"
-72-->[androidx.emoji2:emoji2:1.2.0] C:\Users\User\.gradle\caches\transforms-3\6db5aa862a49de8667f2a7b9b0bf2022\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:26:13-68
-73            android:exported="false" >
-73-->[androidx.emoji2:emoji2:1.2.0] C:\Users\User\.gradle\caches\transforms-3\6db5aa862a49de8667f2a7b9b0bf2022\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:27:13-37
-74            <meta-data
-74-->[androidx.emoji2:emoji2:1.2.0] C:\Users\User\.gradle\caches\transforms-3\6db5aa862a49de8667f2a7b9b0bf2022\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
-75                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-75-->[androidx.emoji2:emoji2:1.2.0] C:\Users\User\.gradle\caches\transforms-3\6db5aa862a49de8667f2a7b9b0bf2022\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:30:17-75
-76                android:value="androidx.startup" />
-76-->[androidx.emoji2:emoji2:1.2.0] C:\Users\User\.gradle\caches\transforms-3\6db5aa862a49de8667f2a7b9b0bf2022\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:31:17-49
-77            <meta-data
-77-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\User\.gradle\caches\transforms-3\d39e07d29f8b10790dd408c3fd7de1b4\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:29:13-31:52
-78                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-78-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\User\.gradle\caches\transforms-3\d39e07d29f8b10790dd408c3fd7de1b4\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:30:17-78
-79                android:value="androidx.startup" />
-79-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\User\.gradle\caches\transforms-3\d39e07d29f8b10790dd408c3fd7de1b4\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:31:17-49
-80            <meta-data
-80-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
-81                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-81-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
-82                android:value="androidx.startup" />
-82-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
-83        </provider>
-84
-85        <uses-library
-85-->[androidx.window:window:1.0.0] C:\Users\User\.gradle\caches\transforms-3\1ea1c0b7cdf4f9e4361e565038f6c965\transformed\jetified-window-1.0.0\AndroidManifest.xml:25:9-27:40
-86            android:name="androidx.window.extensions"
-86-->[androidx.window:window:1.0.0] C:\Users\User\.gradle\caches\transforms-3\1ea1c0b7cdf4f9e4361e565038f6c965\transformed\jetified-window-1.0.0\AndroidManifest.xml:26:13-54
-87            android:required="false" />
-87-->[androidx.window:window:1.0.0] C:\Users\User\.gradle\caches\transforms-3\1ea1c0b7cdf4f9e4361e565038f6c965\transformed\jetified-window-1.0.0\AndroidManifest.xml:27:13-37
-88        <uses-library
-88-->[androidx.window:window:1.0.0] C:\Users\User\.gradle\caches\transforms-3\1ea1c0b7cdf4f9e4361e565038f6c965\transformed\jetified-window-1.0.0\AndroidManifest.xml:28:9-30:40
-89            android:name="androidx.window.sidecar"
-89-->[androidx.window:window:1.0.0] C:\Users\User\.gradle\caches\transforms-3\1ea1c0b7cdf4f9e4361e565038f6c965\transformed\jetified-window-1.0.0\AndroidManifest.xml:29:13-51
-90            android:required="false" />
-90-->[androidx.window:window:1.0.0] C:\Users\User\.gradle\caches\transforms-3\1ea1c0b7cdf4f9e4361e565038f6c965\transformed\jetified-window-1.0.0\AndroidManifest.xml:30:13-37
-91
-92        <receiver
-92-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
-93            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-93-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
-94            android:directBootAware="false"
-94-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
-95            android:enabled="true"
-95-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
-96            android:exported="true"
-96-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
-97            android:permission="android.permission.DUMP" >
-97-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
-98            <intent-filter>
-98-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
-99                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-99-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
-99-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
-100            </intent-filter>
-101            <intent-filter>
-101-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
-102                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-102-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
-102-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
-103            </intent-filter>
-104            <intent-filter>
-104-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
-105                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-105-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
-105-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
-106            </intent-filter>
-107            <intent-filter>
-107-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
-108                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-108-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
-108-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\User\.gradle\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
-109            </intent-filter>
-110        </receiver>
-111    </application>
-112
-113</manifest>
+47-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:31:13-37
+48        <activity
+48-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:33:9-35:39
+49            android:name="com.haircut.app.activity.RegisterActivity"
+49-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:34:13-54
+50            android:exported="false" />
+50-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:35:13-37
+51        <activity
+51-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:37:9-39:39
+52            android:name="com.haircut.app.activity.BookingActivity"
+52-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:38:13-53
+53            android:exported="false" />
+53-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:39:13-37
+54        <activity
+54-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:41:9-43:39
+55            android:name="com.haircut.app.activity.ProfileActivity"
+55-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:42:13-53
+56            android:exported="false" />
+56-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:43:13-37
+57        <activity
+57-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:45:9-48:57
+58            android:name="com.haircut.app.activity.AIChatActivity"
+58-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:46:13-52
+59            android:exported="false"
+59-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:47:13-37
+60            android:windowSoftInputMode="adjustResize" />
+60-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:48:13-55
+61        <activity
+61-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:50:9-52:39
+62            android:name="com.haircut.app.activity.ReviewActivity"
+62-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:51:13-52
+63            android:exported="false" />
+63-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:52:13-37
+64        <activity
+64-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:54:9-64:20
+65            android:name="com.haircut.app.activity.PaymentActivity"
+65-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:55:13-53
+66            android:exported="true"
+66-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:56:13-36
+67            android:launchMode="singleTop" >
+67-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:57:13-43
+68            <intent-filter>
+68-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:58:13-63:29
+69                <action android:name="android.intent.action.VIEW" />
+69-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:59:17-68
+69-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:59:25-66
+70
+71                <category android:name="android.intent.category.DEFAULT" />
+71-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:60:17-75
+71-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:60:27-73
+72                <category android:name="android.intent.category.BROWSABLE" />
+72-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:61:17-77
+72-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:61:27-75
+73
+74                <data
+74-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:62:17-73
+75                    android:host="payment"
+75-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:62:49-71
+76                    android:scheme="hairbook" />
+76-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:62:23-48
+77            </intent-filter>
+78        </activity>
+79
+80        <receiver
+80-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:66:9-68:39
+81            android:name="com.haircut.app.notification.ReminderReceiver"
+81-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:67:13-58
+82            android:exported="false" />
+82-->D:\Mobile\Android-app\app\src\main\AndroidManifest.xml:68:13-37
+83
+84        <provider
+84-->[androidx.emoji2:emoji2:1.2.0] C:\Users\aiten\caches\transforms-3\6db5aa862a49de8667f2a7b9b0bf2022\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+85            android:name="androidx.startup.InitializationProvider"
+85-->[androidx.emoji2:emoji2:1.2.0] C:\Users\aiten\caches\transforms-3\6db5aa862a49de8667f2a7b9b0bf2022\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:25:13-67
+86            android:authorities="com.haircut.app.androidx-startup"
+86-->[androidx.emoji2:emoji2:1.2.0] C:\Users\aiten\caches\transforms-3\6db5aa862a49de8667f2a7b9b0bf2022\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:26:13-68
+87            android:exported="false" >
+87-->[androidx.emoji2:emoji2:1.2.0] C:\Users\aiten\caches\transforms-3\6db5aa862a49de8667f2a7b9b0bf2022\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:27:13-37
+88            <meta-data
+88-->[androidx.emoji2:emoji2:1.2.0] C:\Users\aiten\caches\transforms-3\6db5aa862a49de8667f2a7b9b0bf2022\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+89                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+89-->[androidx.emoji2:emoji2:1.2.0] C:\Users\aiten\caches\transforms-3\6db5aa862a49de8667f2a7b9b0bf2022\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:30:17-75
+90                android:value="androidx.startup" />
+90-->[androidx.emoji2:emoji2:1.2.0] C:\Users\aiten\caches\transforms-3\6db5aa862a49de8667f2a7b9b0bf2022\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:31:17-49
+91            <meta-data
+91-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\aiten\caches\transforms-3\d39e07d29f8b10790dd408c3fd7de1b4\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:29:13-31:52
+92                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+92-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\aiten\caches\transforms-3\d39e07d29f8b10790dd408c3fd7de1b4\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:30:17-78
+93                android:value="androidx.startup" />
+93-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\aiten\caches\transforms-3\d39e07d29f8b10790dd408c3fd7de1b4\transformed\jetified-lifecycle-process-2.6.2\AndroidManifest.xml:31:17-49
+94            <meta-data
+94-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
+95                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+95-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
+96                android:value="androidx.startup" />
+96-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
+97        </provider>
+98
+99        <uses-library
+99-->[androidx.window:window:1.0.0] C:\Users\aiten\caches\transforms-3\1ea1c0b7cdf4f9e4361e565038f6c965\transformed\jetified-window-1.0.0\AndroidManifest.xml:25:9-27:40
+100            android:name="androidx.window.extensions"
+100-->[androidx.window:window:1.0.0] C:\Users\aiten\caches\transforms-3\1ea1c0b7cdf4f9e4361e565038f6c965\transformed\jetified-window-1.0.0\AndroidManifest.xml:26:13-54
+101            android:required="false" />
+101-->[androidx.window:window:1.0.0] C:\Users\aiten\caches\transforms-3\1ea1c0b7cdf4f9e4361e565038f6c965\transformed\jetified-window-1.0.0\AndroidManifest.xml:27:13-37
+102        <uses-library
+102-->[androidx.window:window:1.0.0] C:\Users\aiten\caches\transforms-3\1ea1c0b7cdf4f9e4361e565038f6c965\transformed\jetified-window-1.0.0\AndroidManifest.xml:28:9-30:40
+103            android:name="androidx.window.sidecar"
+103-->[androidx.window:window:1.0.0] C:\Users\aiten\caches\transforms-3\1ea1c0b7cdf4f9e4361e565038f6c965\transformed\jetified-window-1.0.0\AndroidManifest.xml:29:13-51
+104            android:required="false" />
+104-->[androidx.window:window:1.0.0] C:\Users\aiten\caches\transforms-3\1ea1c0b7cdf4f9e4361e565038f6c965\transformed\jetified-window-1.0.0\AndroidManifest.xml:30:13-37
+105
+106        <receiver
+106-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
+107            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+107-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
+108            android:directBootAware="false"
+108-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
+109            android:enabled="true"
+109-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
+110            android:exported="true"
+110-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
+111            android:permission="android.permission.DUMP" >
+111-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
+112            <intent-filter>
+112-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
+113                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+113-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
+113-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
+114            </intent-filter>
+115            <intent-filter>
+115-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
+116                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+116-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
+116-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
+117            </intent-filter>
+118            <intent-filter>
+118-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
+119                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+119-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
+119-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
+120            </intent-filter>
+121            <intent-filter>
+121-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
+122                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+122-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
+122-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\aiten\caches\transforms-3\0db8f035745ab68a2782efc838399652\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
+123            </intent-filter>
+124        </receiver>
+125    </application>
+126
+127</manifest>

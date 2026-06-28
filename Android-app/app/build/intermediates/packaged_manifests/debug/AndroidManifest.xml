@@ -10,6 +10,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
 
     <permission
         android:name="com.haircut.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
@@ -29,8 +33,6 @@
         android:testOnly="true"
         android:theme="@style/Theme.HairBook"
         android:usesCleartextTraffic="true" >
-
-        <!-- Launcher -->
         <activity
             android:name="com.haircut.app.activity.LoginActivity"
             android:exported="true" >
@@ -40,32 +42,44 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!-- Main hub (after login) -->
         <activity
             android:name="com.haircut.app.activity.MainActivity"
             android:exported="false" />
-
-        <!-- TV2: Register -->
         <activity
             android:name="com.haircut.app.activity.RegisterActivity"
             android:exported="false" />
-
-        <!-- TV3: Booking -->
         <activity
             android:name="com.haircut.app.activity.BookingActivity"
             android:exported="false" />
-
-        <!-- Profile -->
         <activity
             android:name="com.haircut.app.activity.ProfileActivity"
             android:exported="false" />
-
-        <!-- AI Chat -->
         <activity
             android:name="com.haircut.app.activity.AIChatActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.haircut.app.activity.ReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.haircut.app.activity.PaymentActivity"
+            android:exported="true"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="payment"
+                    android:scheme="hairbook" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name="com.haircut.app.notification.ReminderReceiver"
+            android:exported="false" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"

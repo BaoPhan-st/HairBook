@@ -4,24 +4,7 @@
             "outputFile": "com.haircut.app-mergeDebugResources-46:/values-kk/values-kk.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\User\\.gradle\\caches\\transforms-3\\de8c3b838232e943fc8a6a53f2c25d4a\\transformed\\core-1.12.0\\res\\values-kk\\values-kk.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,150,252,354,457,561,658,769",
-                        "endColumns": "94,101,101,102,103,96,110,100",
-                        "endOffsets": "145,247,349,452,556,653,764,865"
-                    },
-                    "to": {
-                        "startLines": "38,39,40,41,42,43,44,115",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "3429,3524,3626,3728,3831,3935,4032,9867",
-                        "endColumns": "94,101,101,102,103,96,110,100",
-                        "endOffsets": "3519,3621,3723,3826,3930,4027,4138,9963"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\User\\.gradle\\caches\\transforms-3\\99dc24b8086e9e02f60cbc0643cdc897\\transformed\\material-1.11.0\\res\\values-kk\\values-kk.xml",
+                    "source": "C:\\Users\\aiten\\caches\\transforms-3\\99dc24b8086e9e02f60cbc0643cdc897\\transformed\\material-1.11.0\\res\\values-kk\\values-kk.xml",
                     "from": {
                         "startLines": "2,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -40,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\User\\.gradle\\caches\\transforms-3\\60f9bab79c5ba5b4c82ae8c6a17130c1\\transformed\\appcompat-1.6.1\\res\\values-kk\\values-kk.xml",
+                    "source": "C:\\Users\\aiten\\caches\\transforms-3\\60f9bab79c5ba5b4c82ae8c6a17130c1\\transformed\\appcompat-1.6.1\\res\\values-kk\\values-kk.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -57,7 +40,24 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\User\\.gradle\\caches\\transforms-3\\0539e3d99b50b35cba0557d46abe72c6\\transformed\\preference-1.2.1\\res\\values-kk\\values-kk.xml",
+                    "source": "C:\\Users\\aiten\\caches\\transforms-3\\de8c3b838232e943fc8a6a53f2c25d4a\\transformed\\core-1.12.0\\res\\values-kk\\values-kk.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,150,252,354,457,561,658,769",
+                        "endColumns": "94,101,101,102,103,96,110,100",
+                        "endOffsets": "145,247,349,452,556,653,764,865"
+                    },
+                    "to": {
+                        "startLines": "38,39,40,41,42,43,44,115",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "3429,3524,3626,3728,3831,3935,4032,9867",
+                        "endColumns": "94,101,101,102,103,96,110,100",
+                        "endOffsets": "3519,3621,3723,3826,3930,4027,4138,9963"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\aiten\\caches\\transforms-3\\0539e3d99b50b35cba0557d46abe72c6\\transformed\\preference-1.2.1\\res\\values-kk\\values-kk.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8",
                         "startColumns": "4,4,4,4,4,4,4",
@@ -74,7 +74,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\User\\.gradle\\caches\\transforms-3\\e5cc0de4ff2040209d50b07a9ed67db7\\transformed\\navigation-ui-2.7.6\\res\\values-kk\\values-kk.xml",
+                    "source": "C:\\Users\\aiten\\caches\\transforms-3\\e5cc0de4ff2040209d50b07a9ed67db7\\transformed\\navigation-ui-2.7.6\\res\\values-kk\\values-kk.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",
