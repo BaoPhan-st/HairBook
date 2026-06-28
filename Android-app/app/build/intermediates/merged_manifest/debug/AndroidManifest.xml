@@ -67,6 +67,17 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
+        <!-- Admin screens -->
+        <activity
+            android:name="com.haircut.app.admin.AdminDashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.haircut.app.admin.AdminUsersActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.haircut.app.admin.AdminUserDetailActivity"
+            android:exported="false" />
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="com.haircut.app.androidx-startup"
