@@ -1,5 +1,7 @@
 package com.haircut.app.api;
 
+import com.haircut.app.admin.AdminUserModel;
+import com.haircut.app.admin.DashboardStatsModel;
 import com.haircut.app.model.AuthResponse;
 import com.haircut.app.model.BarberModel;
 import com.haircut.app.model.BookingModel;
@@ -14,13 +16,14 @@ import com.haircut.app.model.BarberRequest;
 import com.haircut.app.model.BarberBookingModel;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.*;
 
 public interface ApiService {
 
-    // ---- AUTH ----
+    // ── AUTH ──────────────────────────────────────────────────────────────────
     @POST("auth/login")
     Call<AuthResponse> login(@Body LoginRequest request);
 
@@ -30,11 +33,11 @@ public interface ApiService {
     @GET("auth/me")
     Call<UserModel> getCurrentUser();
 
-    // ---- SERVICES ----
+    // ── SERVICES ──────────────────────────────────────────────────────────────
     @GET("services")
     Call<List<ServiceModel>> getAllServices();
 
-    // ---- BARBERS ----
+    // ── BARBERS ───────────────────────────────────────────────────────────────
     @GET("barbers")
     Call<List<BarberModel>> getAllBarbers();
 
@@ -43,6 +46,7 @@ public interface ApiService {
         @Path("id") Long barberId,
         @Query("date") String date
     );
+
 
     @GET("barbers/{id}")
     Call<BarberModel> getBarberById(@Path("id") Long id);
@@ -59,7 +63,9 @@ public interface ApiService {
     @GET("barbers/{id}/bookings")
     Call<List<BarberBookingModel>> getBarberBookings(@Path("id") Long id, @Query("date") String date);
 
-    // ---- BOOKINGS ----
+
+    // ── BOOKINGS ──────────────────────────────────────────────────────────────
+
     @POST("bookings")
     Call<BookingModel> createBooking(@Body BookingRequest request);
 
@@ -69,7 +75,33 @@ public interface ApiService {
     @PUT("bookings/{id}/cancel")
     Call<BookingModel> cancelBooking(@Path("id") Long bookingId);
 
-    // ---- AI CHAT ----
+    // ── AI CHAT ───────────────────────────────────────────────────────────────
     @POST("ai/chat")
     Call<ChatResponse> sendChatMessage(@Body ChatRequest request);
+
+    // ── ADMIN: Dashboard ──────────────────────────────────────────────────────
+    @GET("admin/dashboard")
+    Call<DashboardStatsModel> getDashboardStats();
+
+    // ── ADMIN: Users ──────────────────────────────────────────────────────────
+    @GET("admin/users")
+    Call<List<AdminUserModel>> getAllUsers();
+
+    @GET("admin/users/search")
+    Call<List<AdminUserModel>> searchUsers(@Query("q") String query);
+
+    @GET("admin/users/{id}")
+    Call<AdminUserModel> getUserDetail(@Path("id") Long userId);
+
+    @PUT("admin/users/{id}/role")
+    Call<AdminUserModel> updateUserRole(
+        @Path("id") Long userId,
+        @Body Map<String, String> body
+    );
+
+    @PUT("admin/users/{id}/status")
+    Call<AdminUserModel> updateUserStatus(
+        @Path("id") Long userId,
+        @Body Map<String, String> body
+    );
 }

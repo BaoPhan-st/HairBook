@@ -33,6 +33,11 @@ public class User {
     @Builder.Default
     private Role role = Role.CUSTOMER;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Builder.Default
+    private Status status = Status.ACTIVE;
+
     @Column(updatable = false)
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -40,5 +45,10 @@ public class User {
     public enum Role {
         CUSTOMER,
         ADMIN
+    }
+
+    public enum Status {
+        ACTIVE,
+        LOCKED
     }
 }
