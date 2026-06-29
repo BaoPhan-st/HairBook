@@ -61,6 +61,9 @@
         <activity
             android:name=".admin.AdminUserDetailActivity"
             android:exported="false"/>
+        <activity android:name=".activity.BarberManagementActivity" />
+        <activity android:name=".activity.BarberFormActivity" />
+        <activity android:name=".activity.BarberScheduleActivity" />
 
     </application>
 

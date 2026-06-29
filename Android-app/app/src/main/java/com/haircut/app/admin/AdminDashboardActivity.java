@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.haircut.app.R;
+import com.haircut.app.activity.BarberManagementActivity;
 import com.haircut.app.activity.LoginActivity;
 import com.haircut.app.activity.MainActivity;
 import com.haircut.app.api.ApiClient;
@@ -67,6 +68,9 @@ public class AdminDashboardActivity extends AppCompatActivity {
         // Nút Quản lý Users
         findViewById(R.id.btn_manage_users).setOnClickListener(v ->
             startActivity(new Intent(this, AdminUsersActivity.class)));
+
+        findViewById(R.id.btn_manage_barbers).setOnClickListener(v ->
+                startActivity(new Intent(this, BarberManagementActivity.class)));
 
         // Nút Logout
         findViewById(R.id.btn_logout).setOnClickListener(v -> confirmLogout());
