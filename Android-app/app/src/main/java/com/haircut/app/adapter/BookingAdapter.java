@@ -18,14 +18,18 @@ import java.util.Locale;
 
 public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHolder> {
 
-    public interface OnCancelClick { void onCancel(Long bookingId); }
+    public interface OnCancelClick { void onCancel(BookingModel booking); }
+    public interface OnRescheduleClick { void onReschedule(BookingModel booking); }
 
     private List<BookingModel> bookings;
-    private final OnCancelClick listener;
+    private final OnCancelClick cancelListener;
+    private final OnRescheduleClick rescheduleListener;
 
-    public BookingAdapter(List<BookingModel> bookings, OnCancelClick listener) {
+    public BookingAdapter(List<BookingModel> bookings, OnCancelClick cancelListener,
+                          OnRescheduleClick rescheduleListener) {
         this.bookings = bookings;
-        this.listener = listener;
+        this.cancelListener = cancelListener;
+        this.rescheduleListener = rescheduleListener;
     }
 
     public void updateData(List<BookingModel> newData) {
@@ -48,7 +52,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
         if (b.service != null) {
             holder.tvServiceName.setText(b.service.name);
             if (b.service.price != null) {
-                NumberFormat fmt = NumberFormat.getNumberInstance(new Locale("vi","VN"));
+                NumberFormat fmt = NumberFormat.getNumberInstance(new Locale("vi", "VN"));
                 holder.tvPrice.setText(fmt.format(b.service.price.longValue()) + "đ");
             }
         }
@@ -58,22 +62,33 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
         if (b.note != null && !b.note.isEmpty()) {
             holder.tvNote.setText("Ghi chú: " + b.note);
             holder.tvNote.setVisibility(View.VISIBLE);
+        } else {
+            holder.tvNote.setVisibility(View.GONE);
         }
 
         setStatusUI(holder, b.status);
 
-        if ("PENDING".equals(b.status)) {
+        boolean canModify = "PENDING".equals(b.status) || "CONFIRMED".equals(b.status);
+
+        if (canModify) {
             holder.btnCancel.setVisibility(View.VISIBLE);
-            holder.btnCancel.setOnClickListener(v -> listener.onCancel(b.id));
+            holder.btnCancel.setOnClickListener(v -> cancelListener.onCancel(b));
         } else {
             holder.btnCancel.setVisibility(View.GONE);
         }
 
-        if ("COMPLETED".equals(b.status) || "CANCELLED".equals(b.status)) {
-            holder.btnRebook.setVisibility(View.VISIBLE);
+        if (canModify) {
+            holder.btnReschedule.setVisibility(View.VISIBLE);
+            holder.btnReschedule.setOnClickListener(v -> rescheduleListener.onReschedule(b));
         } else {
-            holder.btnRebook.setVisibility(View.GONE);
+            holder.btnReschedule.setVisibility(View.GONE);
         }
+
+        boolean isFinalState = "COMPLETED".equals(b.status)
+                || "CANCELLED_BY_CUSTOMER".equals(b.status)
+                || "CANCELLED_BY_SALON".equals(b.status)
+                || "NO_SHOW".equals(b.status);
+        holder.btnRebook.setVisibility(isFinalState ? View.VISIBLE : View.GONE);
     }
 
     private void setStatusUI(ViewHolder holder, String status) {
@@ -87,13 +102,29 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
                 holder.tvStatus.setText("Đã xác nhận");
                 holder.tvStatus.setTextColor(0xFF4CAF50);
                 break;
+            case "IN_PROGRESS":
+                holder.tvStatus.setText("Đang thực hiện");
+                holder.tvStatus.setTextColor(0xFF2196F3);
+                break;
             case "COMPLETED":
                 holder.tvStatus.setText("Hoàn thành");
                 holder.tvStatus.setTextColor(0xFF2196F3);
                 break;
-            case "CANCELLED":
+            case "CANCELLED_BY_CUSTOMER":
                 holder.tvStatus.setText("Đã huỷ");
                 holder.tvStatus.setTextColor(0xFFF44336);
+                break;
+            case "CANCELLED_BY_SALON":
+                holder.tvStatus.setText("Salon đã huỷ");
+                holder.tvStatus.setTextColor(0xFFF44336);
+                break;
+            case "NO_SHOW":
+                holder.tvStatus.setText("Không đến");
+                holder.tvStatus.setTextColor(0xFF9E9E9E);
+                break;
+            default:
+                holder.tvStatus.setText(status);
+                holder.tvStatus.setTextColor(0xFF9E9E9E);
                 break;
         }
     }
@@ -115,7 +146,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvBookingTime, tvStatus, tvServiceName, tvPrice, tvBarberName, tvNote;
-        Button btnCancel, btnRebook;
+        Button btnCancel, btnRebook, btnReschedule;
         ViewHolder(View v) {
             super(v);
             tvBookingTime = v.findViewById(R.id.tv_booking_time);
@@ -126,6 +157,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
             tvNote        = v.findViewById(R.id.tv_note);
             btnCancel     = v.findViewById(R.id.btn_cancel);
             btnRebook     = v.findViewById(R.id.btn_rebook);
+            btnReschedule = v.findViewById(R.id.btn_reschedule);
         }
     }
 }

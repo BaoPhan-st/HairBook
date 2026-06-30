@@ -6,10 +6,12 @@ import com.haircut.app.model.AuthResponse;
 import com.haircut.app.model.BarberModel;
 import com.haircut.app.model.BookingModel;
 import com.haircut.app.model.BookingRequest;
+import com.haircut.app.model.CancelRequest;
 import com.haircut.app.model.ChatRequest;
 import com.haircut.app.model.ChatResponse;
 import com.haircut.app.model.LoginRequest;
 import com.haircut.app.model.RegisterRequest;
+import com.haircut.app.model.RescheduleRequest;
 import com.haircut.app.model.ServiceModel;
 import com.haircut.app.model.UserModel;
 import com.haircut.app.model.BarberRequest;
@@ -43,8 +45,9 @@ public interface ApiService {
 
     @GET("barbers/{id}/available-slots")
     Call<List<String>> getAvailableSlots(
-        @Path("id") Long barberId,
-        @Query("date") String date
+            @Path("id") Long barberId,
+            @Query("date") String date,
+            @Query("serviceId") Long serviceId
     );
 
 
@@ -73,7 +76,10 @@ public interface ApiService {
     Call<List<BookingModel>> getMyBookings();
 
     @PUT("bookings/{id}/cancel")
-    Call<BookingModel> cancelBooking(@Path("id") Long bookingId);
+    Call<BookingModel> cancelBooking(@Path("id") Long bookingId, @Body CancelRequest request);
+
+    @PUT("bookings/{id}/reschedule")
+    Call<BookingModel> rescheduleBooking(@Path("id") Long bookingId, @Body RescheduleRequest request);
 
     // ── AI CHAT ───────────────────────────────────────────────────────────────
     @POST("ai/chat")
@@ -95,13 +101,13 @@ public interface ApiService {
 
     @PUT("admin/users/{id}/role")
     Call<AdminUserModel> updateUserRole(
-        @Path("id") Long userId,
-        @Body Map<String, String> body
+            @Path("id") Long userId,
+            @Body Map<String, String> body
     );
 
     @PUT("admin/users/{id}/status")
     Call<AdminUserModel> updateUserStatus(
-        @Path("id") Long userId,
-        @Body Map<String, String> body
+            @Path("id") Long userId,
+            @Body Map<String, String> body
     );
 }

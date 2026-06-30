@@ -39,8 +39,8 @@ public class AdminController {
         private long todayBookings;
 
         public DashboardResponse(long totalUsers, long totalCustomers, long totalAdmins,
-                                  long totalBookings, long pendingBookings, long confirmedBookings,
-                                  long completedBookings, long cancelledBookings, long todayBookings) {
+                                 long totalBookings, long pendingBookings, long confirmedBookings,
+                                 long completedBookings, long cancelledBookings, long todayBookings) {
             this.totalUsers = totalUsers;
             this.totalCustomers = totalCustomers;
             this.totalAdmins = totalAdmins;
@@ -74,8 +74,8 @@ public class AdminController {
                 "role",      u.getRole().name(),
                 "status",    u.getStatus().name(),
                 "createdAt", u.getCreatedAt() != null
-                                 ? u.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
-                                 : ""
+                        ? u.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
+                        : ""
         );
     }
 
@@ -91,7 +91,8 @@ public class AdminController {
         long pendingBookings   = countBookingsByStatus(Booking.Status.PENDING);
         long confirmedBookings = countBookingsByStatus(Booking.Status.CONFIRMED);
         long completedBookings = countBookingsByStatus(Booking.Status.COMPLETED);
-        long cancelledBookings = countBookingsByStatus(Booking.Status.CANCELLED);
+        long cancelledBookings = countBookingsByStatus(Booking.Status.CANCELLED_BY_CUSTOMER)
+                + countBookingsByStatus(Booking.Status.CANCELLED_BY_SALON);
 
         // Bookings hôm nay
         LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
