@@ -1,0 +1,6 @@
+
+# Local Spring Boot database configuration - do not commit
+Backend(SpringBoot)/src/main/resources/application.properties
+
+# Spring Boot build output
+Backend(SpringBoot)/target/
