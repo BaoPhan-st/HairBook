@@ -30,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="#FFFFFF"
+        app:tabMode="scrollable"
         app:tabTextColor="#9E9E9E"
         app:tabSelectedTextColor="#7B1FA2"
         app:tabIndicatorColor="#7B1FA2"
@@ -44,6 +45,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Chờ xác nhận"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đã xác nhận"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đang thực hiện"/>
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

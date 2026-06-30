@@ -5,6 +5,7 @@ import com.haircut.booking.entity.Barber;
 import com.haircut.booking.entity.Booking;
 import com.haircut.booking.repository.BookingRepository;
 import com.haircut.booking.service.BarberService;
+import com.haircut.booking.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.*;
@@ -22,6 +23,7 @@ public class BarberController {
 
     private final BarberService     barberService;
     private final BookingRepository bookingRepository;
+    private final BookingService    bookingService;
 
     // GET /api/barbers — danh sách tất cả thợ
     @GetMapping
@@ -75,32 +77,19 @@ public class BarberController {
         }
     }
 
-    // GET /api/barbers/{id}/available-slots?date= — slot trống (giữ nguyên)
+    // GET /api/barbers/{id}/available-slots?date=&serviceId= — slot trống theo đúng thời lượng dịch vụ
     @GetMapping("/{id}/available-slots")
-    public ResponseEntity<List<String>> getAvailableSlots(
+    public ResponseEntity<?> getAvailableSlots(
             @PathVariable Long id,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @RequestParam(required = false) Long serviceId) {
 
-        LocalDateTime start = date.atStartOfDay();
-        LocalDateTime end   = date.atTime(LocalTime.MAX);
-
-        List<Booking> booked = bookingRepository.findByBarberAndDate(id, start, end);
-
-        List<String> allSlots = new ArrayList<>();
-        LocalTime cursor = LocalTime.of(8, 0);
-        while (!cursor.isAfter(LocalTime.of(19, 30))) {
-            allSlots.add(String.format("%02d:%02d", cursor.getHour(), cursor.getMinute()));
-            cursor = cursor.plusMinutes(30);
+        try {
+            List<String> slots = bookingService.getAvailableSlots(id, date, serviceId);
+            return ResponseEntity.ok(slots);
+        } catch (BookingService.NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
         }
-
-        for (Booking b : booked) {
-            String bookedSlot = String.format("%02d:%02d",
-                    b.getBookingTime().getHour(),
-                    b.getBookingTime().getMinute());
-            allSlots.remove(bookedSlot);
-        }
-
-        return ResponseEntity.ok(allSlots);
     }
 
     // GET /api/barbers/{id}/bookings?date= — lịch booking của thợ theo ngày
@@ -124,6 +113,7 @@ public class BarberController {
             Map<String, Object> map = new LinkedHashMap<>();
             map.put("bookingId",   b.getId());
             map.put("bookingTime", b.getBookingTime().toString());
+            map.put("bookingEndTime", b.getBookingEndTime().toString());
             map.put("status",      b.getStatus().name());
             map.put("note",        b.getNote() != null ? b.getNote() : "");
             map.put("customer", Map.of(
