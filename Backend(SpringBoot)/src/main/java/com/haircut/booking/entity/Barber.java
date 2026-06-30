@@ -15,19 +15,15 @@ public class Barber {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 255)
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "specialty", length = 255)
     private String specialty;
 
-    @Column(name = "image_url", length = 500)
     private String imageUrl;
 
-    @Column(name = "rating")
     private Double rating;
 
-    @Column(name = "available", nullable = false)
     @Builder.Default
     private Boolean available = true;
 }
