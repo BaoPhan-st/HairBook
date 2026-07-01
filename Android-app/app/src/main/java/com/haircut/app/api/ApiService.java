@@ -85,6 +85,25 @@ public interface ApiService {
     @POST("ai/chat")
     Call<ChatResponse> sendChatMessage(@Body ChatRequest request);
 
+    // ── ADMIN: Booking management ─────────────────────────────────────────────
+    @GET("admin/bookings")
+    Call<List<BookingModel>> getAllAdminBookings(
+            @Query("status") String status,
+            @Query("date") String date
+    );
+
+    @PUT("admin/bookings/{id}/confirm")
+    Call<BookingModel> adminConfirmBooking(@Path("id") Long bookingId);
+
+    @PUT("admin/bookings/{id}/reject")
+    Call<BookingModel> adminRejectBooking(@Path("id") Long bookingId, @Body CancelRequest request);
+
+    @PUT("admin/bookings/{id}/complete")
+    Call<BookingModel> adminCompleteBooking(@Path("id") Long bookingId);
+
+    @PUT("admin/bookings/{id}/no-show")
+    Call<BookingModel> adminMarkNoShow(@Path("id") Long bookingId);
+
     // ── ADMIN: Dashboard ──────────────────────────────────────────────────────
     @GET("admin/dashboard")
     Call<DashboardStatsModel> getDashboardStats();

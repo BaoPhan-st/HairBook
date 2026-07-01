@@ -431,15 +431,18 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- Placeholder: Quản lý Bookings (chưa implement) -->
+                <!-- Nút Quản lý Lịch đặt -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_manage_bookings"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="4dp"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:cardBackgroundColor="#E0E0E0">
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/primary_dark"
+                    android:clickable="true"
+                    android:focusable="true">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -452,27 +455,17 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="📅"
-                            android:textSize="32sp"
-                            android:alpha="0.5"/>
+                            android:textSize="32sp"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Quản lý\nLịch đặt"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="#FFFFFF"
                             android:textSize="13sp"
                             android:textStyle="bold"
                             android:gravity="center"
                             android:layout_marginTop="8dp"/>
-
-                        <!-- TODO: replace with real module when BookingAdmin is ready -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Sắp ra mắt"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp"
-                            android:alpha="0.6"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>

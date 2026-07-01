@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.haircut.app.R;
+import com.haircut.app.admin.AdminBookingActivity;
 import com.haircut.app.activity.BarberManagementActivity;
 import com.haircut.app.activity.LoginActivity;
 import com.haircut.app.activity.MainActivity;
@@ -65,9 +66,13 @@ public class AdminDashboardActivity extends AppCompatActivity {
         String adminName = ApiClient.getUserName(this);
         tvAdminName.setText("Xin chào, " + (adminName.isEmpty() ? "Admin" : adminName));
 
+        // Nút Quản lý Lịch đặt
+        findViewById(R.id.btn_manage_bookings).setOnClickListener(v ->
+                startActivity(new Intent(this, AdminBookingActivity.class)));
+
         // Nút Quản lý Users
         findViewById(R.id.btn_manage_users).setOnClickListener(v ->
-            startActivity(new Intent(this, AdminUsersActivity.class)));
+                startActivity(new Intent(this, AdminUsersActivity.class)));
 
         findViewById(R.id.btn_manage_barbers).setOnClickListener(v ->
                 startActivity(new Intent(this, BarberManagementActivity.class)));
@@ -79,27 +84,27 @@ public class AdminDashboardActivity extends AppCompatActivity {
     private void loadDashboard() {
         setLoading(true);
         ApiClient.getService(this).getDashboardStats()
-            .enqueue(new Callback<DashboardStatsModel>() {
-                @Override
-                public void onResponse(Call<DashboardStatsModel> call, Response<DashboardStatsModel> response) {
-                    setLoading(false);
-                    if (response.isSuccessful() && response.body() != null) {
-                        bindStats(response.body());
-                    } else if (response.code() == 401 || response.code() == 403) {
-                        handleUnauthorized();
-                    } else {
-                        Toast.makeText(AdminDashboardActivity.this,
-                            "Không thể tải dữ liệu dashboard", Toast.LENGTH_SHORT).show();
+                .enqueue(new Callback<DashboardStatsModel>() {
+                    @Override
+                    public void onResponse(Call<DashboardStatsModel> call, Response<DashboardStatsModel> response) {
+                        setLoading(false);
+                        if (response.isSuccessful() && response.body() != null) {
+                            bindStats(response.body());
+                        } else if (response.code() == 401 || response.code() == 403) {
+                            handleUnauthorized();
+                        } else {
+                            Toast.makeText(AdminDashboardActivity.this,
+                                    "Không thể tải dữ liệu dashboard", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<DashboardStatsModel> call, Throwable t) {
-                    setLoading(false);
-                    Toast.makeText(AdminDashboardActivity.this,
-                        "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onFailure(Call<DashboardStatsModel> call, Throwable t) {
+                        setLoading(false);
+                        Toast.makeText(AdminDashboardActivity.this,
+                                "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void bindStats(DashboardStatsModel stats) {
@@ -116,11 +121,11 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
     private void confirmLogout() {
         new AlertDialog.Builder(this)
-            .setTitle("Đăng xuất")
-            .setMessage("Bạn có chắc muốn đăng xuất không?")
-            .setPositiveButton("Đăng xuất", (dialog, which) -> logout())
-            .setNegativeButton("Huỷ", null)
-            .show();
+                .setTitle("Đăng xuất")
+                .setMessage("Bạn có chắc muốn đăng xuất không?")
+                .setPositiveButton("Đăng xuất", (dialog, which) -> logout())
+                .setNegativeButton("Huỷ", null)
+                .show();
     }
 
     private void logout() {
