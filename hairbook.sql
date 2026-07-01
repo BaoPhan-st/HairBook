@@ -115,3 +115,57 @@ INSERT INTO `users` VALUES (2, 'khach@gmail.com', '$2a$10$TqF6/D8wY2HqaKibgNV1S.
 INSERT INTO `users` VALUES (3, '12345', '$2a$10$ebW26y7cpu.KBwO3IOkGfOVVDn/ial8LBjPyqBwn6QSMfNu0jQpZC', '12345', '12345', 'CUSTOMER', '2026-06-04 16:17:52');
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+-- =========================================================
+-- BOOKING
+-- =========================================================
+
+-- 1. Thêm các cột mới
+ALTER TABLE bookings
+    ADD COLUMN IF NOT EXISTS booking_end_time DATETIME NULL,
+    ADD COLUMN IF NOT EXISTS updated_at        DATETIME NULL,
+    ADD COLUMN IF NOT EXISTS cancelled_at      DATETIME NULL,
+    ADD COLUMN IF NOT EXISTS cancel_reason     VARCHAR(255) NULL;
+
+-- 2. Tính booking_end_time cho dữ liệu cũ (booking_time + duration của service)
+UPDATE bookings b
+JOIN services s ON b.service_id = s.id
+SET b.booking_end_time = DATE_ADD(b.booking_time, INTERVAL COALESCE(s.duration_minutes, 30) MINUTE)
+WHERE b.booking_end_time IS NULL;
+
+-- Phòng trường hợp còn sót (service_id null bất thường) -> mặc định +30 phút
+UPDATE bookings
+SET booking_end_time = DATE_ADD(booking_time, INTERVAL 30 MINUTE)
+WHERE booking_end_time IS NULL;
+
+-- 3. Set updated_at mặc định = created_at cho dữ liệu cũ
+UPDATE bookings
+SET updated_at = COALESCE(created_at, NOW())
+WHERE updated_at IS NULL;
+
+-- 4. Đổi cột thành NOT NULL sau khi đã có dữ liệu đầy đủ
+ALTER TABLE bookings
+    MODIFY COLUMN booking_end_time DATETIME NOT NULL,
+    MODIFY COLUMN updated_at DATETIME NOT NULL;
+
+-- 5. Migrate giá trị status cũ sang enum mới
+--    Status: PENDING, CONFIRMED, IN_PROGRESS, COMPLETED, CANCELLED_BY_CUSTOMER, CANCELLED_BY_SALON, NO_SHOW
+UPDATE bookings
+SET status = 'CANCELLED_BY_CUSTOMER'
+WHERE status = 'CANCELLED';
+
+-- 6. barber_id không còn cho phép NULL (nghiệp vụ bắt buộc chọn thợ)
+--    Nếu có booking cũ thiếu barber_id, cần xử lý tay trước khi chạy lệnh dưới,
+--    ví dụ gán tạm 1 thợ mặc định hoặc xóa các booking rác đó.
+-- UPDATE bookings SET barber_id = (SELECT id FROM barbers LIMIT 1) WHERE barber_id IS NULL;
+ALTER TABLE bookings
+    MODIFY COLUMN barber_id BIGINT NOT NULL;
+
+-- 7. Index hỗ trợ truy vấn overlap theo thợ + khoảng thời gian (rất hay dùng)
+CREATE INDEX IF NOT EXISTS idx_bookings_barber_time
+    ON bookings (barber_id, booking_time, booking_end_time);
+
+-- 8. Index hỗ trợ "GET /api/bookings/my" sắp xếp theo created_at
+CREATE INDEX IF NOT EXISTS idx_bookings_user_created
+    ON bookings (user_id, created_at);

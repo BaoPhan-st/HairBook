@@ -15,10 +15,6 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.*;
-import com.haircut.app.model.ReviewRequest;
-import com.haircut.app.model.ReviewModel;
-import com.haircut.app.model.PaymentRequest;
-import com.haircut.app.model.PaymentResponse;
 
 public interface ApiService {
 
@@ -73,4 +69,30 @@ public interface ApiService {
 
     @GET("payments/status/{orderId}")
     Call<PaymentResponse> getPaymentStatus(@Path("orderId") String orderId);
+
+    // ── ADMIN: Dashboard ──────────────────────────────────────────────────────
+    @GET("admin/dashboard")
+    Call<DashboardStatsModel> getDashboardStats();
+
+    // ── ADMIN: Users ──────────────────────────────────────────────────────────
+    @GET("admin/users")
+    Call<List<AdminUserModel>> getAllUsers();
+
+    @GET("admin/users/search")
+    Call<List<AdminUserModel>> searchUsers(@Query("q") String query);
+
+    @GET("admin/users/{id}")
+    Call<AdminUserModel> getUserDetail(@Path("id") Long userId);
+
+    @PUT("admin/users/{id}/role")
+    Call<AdminUserModel> updateUserRole(
+            @Path("id") Long userId,
+            @Body Map<String, String> body
+    );
+
+    @PUT("admin/users/{id}/status")
+    Call<AdminUserModel> updateUserStatus(
+            @Path("id") Long userId,
+            @Body Map<String, String> body
+    );
 }

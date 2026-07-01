@@ -67,6 +67,22 @@
             android:name=".notification.ReminderReceiver"
             android:exported="false"/>
 
+        <!-- Admin screens -->
+        <activity
+            android:name=".admin.AdminDashboardActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".admin.AdminUsersActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".admin.AdminUserDetailActivity"
+            android:exported="false"/>
+        <activity android:name=".activity.BarberManagementActivity" />
+        <activity android:name=".activity.BarberFormActivity" />
+        <activity android:name=".activity.BarberScheduleActivity" />
+
     </application>
 
 </manifest>

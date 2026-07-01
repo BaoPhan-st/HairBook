@@ -40,8 +40,12 @@ public class AuthController {
         private String token;
         private String email;
         private String fullName;
-        public AuthResponse(String token, String email, String fullName) {
-            this.token = token; this.email = email; this.fullName = fullName;
+        private String role;
+        public AuthResponse(String token, String email, String fullName, String role) {
+            this.token = token;
+            this.email = email;
+            this.fullName = fullName;
+            this.role = role;
         }
     }
 
@@ -55,9 +59,17 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("error", "Email hoặc mật khẩu không đúng"));
         }
+
         User user = userService.findByEmail(req.getEmail());
-        String token = jwtUtil.generateToken(user.getEmail());
-        return ResponseEntity.ok(new AuthResponse(token, user.getEmail(), user.getFullName()));
+
+        // Kiểm tra tài khoản bị khoá
+        if (user.getStatus() == User.Status.LOCKED) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("error", "Tài khoản của bạn đã bị khoá. Vui lòng liên hệ quản trị viên."));
+        }
+
+        String token = jwtUtil.generateToken(user.getEmail(), user.getRole().name());
+        return ResponseEntity.ok(new AuthResponse(token, user.getEmail(), user.getFullName(), user.getRole().name()));
     }
 
     @PostMapping("/register")
@@ -66,9 +78,9 @@ public class AuthController {
             User user = userService.register(
                     req.getEmail(), req.getPassword(), req.getFullName(), req.getPhone()
             );
-            String token = jwtUtil.generateToken(user.getEmail());
+            String token = jwtUtil.generateToken(user.getEmail(), user.getRole().name());
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(new AuthResponse(token, user.getEmail(), user.getFullName()));
+                    .body(new AuthResponse(token, user.getEmail(), user.getFullName(), user.getRole().name()));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(Map.of("error", e.getMessage()));
@@ -84,7 +96,9 @@ public class AuthController {
                 "id",       user.getId(),
                 "email",    user.getEmail(),
                 "fullName", user.getFullName(),
-                "phone",    user.getPhone() != null ? user.getPhone() : ""
+                "phone",    user.getPhone() != null ? user.getPhone() : "",
+                "role",     user.getRole().name(),
+                "status",   user.getStatus().name()
         ));
     }
-}
+}
