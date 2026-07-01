@@ -1,8 +1,10 @@
 package com.haircut.booking.controller;
 
 import com.haircut.booking.service.ReviewService;
+
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,12 +21,11 @@ public class ReviewController {
 
     @Data
     public static class ReviewRequest {
-        private Long   bookingId;
-        private int    rating;
+        private Long bookingId;
+        private int rating;
         private String comment;
     }
 
-    /** POST /api/reviews — gửi đánh giá */
     @PostMapping
     public ResponseEntity<?> submitReview(
             @RequestBody ReviewRequest req,
@@ -42,7 +43,6 @@ public class ReviewController {
         }
     }
 
-    /** GET /api/reviews/booking/{bookingId} — lấy review của 1 booking */
     @GetMapping("/booking/{bookingId}")
     public ResponseEntity<?> getReviewByBooking(@PathVariable Long bookingId) {
         Map<String, Object> review = reviewService.getReviewByBooking(bookingId);

@@ -31,7 +31,7 @@ import retrofit2.http.*;
 
 public interface ApiService {
 
-    // ---- AUTH ----
+    // ── AUTH ──────────────────────────────────────────────────────────────────
     @POST("auth/login")
     Call<AuthResponse> login(@Body LoginRequest request);
 
@@ -41,11 +41,11 @@ public interface ApiService {
     @GET("auth/me")
     Call<UserModel> getCurrentUser();
 
-    // ---- SERVICES ----
+    // ── SERVICES ──────────────────────────────────────────────────────────────
     @GET("services")
     Call<List<ServiceModel>> getAllServices();
 
-    // ---- BARBERS ----
+    // ── BARBERS ───────────────────────────────────────────────────────────────
     @GET("barbers")
     Call<List<BarberModel>> getAllBarbers();
 
@@ -55,6 +55,9 @@ public interface ApiService {
         @Query("date") String date,
         @Query("serviceId") Long serviceId
     );
+
+    @GET("barbers/{id}")
+    Call<BarberModel> getBarberById(@Path("id") Long id);
 
     @POST("barbers")
     Call<BarberModel> createBarber(@Body BarberRequest body);
@@ -66,25 +69,9 @@ public interface ApiService {
     Call<Void> deleteBarber(@Path("id") Long id);
 
     @GET("barbers/{id}/bookings")
-    Call<List<BarberBookingModel>> getBarberBookings(
-            @Path("id") Long barberId,
-            @Query("date") String date
-    );
+    Call<List<BarberBookingModel>> getBarberBookings(@Path("id") Long id, @Query("date") String date);
 
-    // ---- BOOKINGS ----
-    @POST("bookings")
-    Call<BookingModel> createBooking(@Body BookingRequest request);
-
-    @GET("bookings/my")
-    Call<List<BookingModel>> getMyBookings();
-
-    @PUT("bookings/{id}/cancel")
-    Call<BookingModel> cancelBooking(@Path("id") Long bookingId, @Body CancelRequest body);
-
-    @PUT("bookings/{id}/reschedule")
-    Call<BookingModel> rescheduleBooking(@Path("id") Long bookingId, @Body RescheduleRequest body);
-
-    // ---- BARBER SCHEDULES  ----
+    // ── BARBER SCHEDULES ──────────────────────────────────────────────────────
     @GET("barbers/{id}/schedules")
     Call<List<BarberScheduleModel>> getBarberSchedules(
             @Path("id") Long barberId,
@@ -104,23 +91,55 @@ public interface ApiService {
             @Query("date") String date
     );
 
-    // ---- AI CHAT ----
+    // ── BOOKINGS ──────────────────────────────────────────────────────────────
+    @POST("bookings")
+    Call<BookingModel> createBooking(@Body BookingRequest request);
+
+    @GET("bookings/my")
+    Call<List<BookingModel>> getMyBookings();
+
+    @PUT("bookings/{id}/cancel")
+    Call<BookingModel> cancelBooking(@Path("id") Long bookingId, @Body CancelRequest body);
+
+    @PUT("bookings/{id}/reschedule")
+    Call<BookingModel> rescheduleBooking(@Path("id") Long bookingId, @Body RescheduleRequest body);
+
+    // ── AI CHAT ───────────────────────────────────────────────────────────────
     @POST("ai/chat")
     Call<ChatResponse> sendChatMessage(@Body ChatRequest request);
 
-    // ---- REVIEW ----
+    // ── REVIEW ────────────────────────────────────────────────────────────────
     @POST("reviews")
     Call<ReviewModel> submitReview(@Body ReviewRequest request);
 
     @GET("reviews/booking/{bookingId}")
     Call<ReviewModel> getReviewByBooking(@Path("bookingId") Long bookingId);
 
-    // ---- PAYMENT ----
+    // ── PAYMENT ───────────────────────────────────────────────────────────────
     @POST("payments/create")
     Call<PaymentResponse> createPayment(@Body PaymentRequest request);
 
     @GET("payments/status/{orderId}")
     Call<PaymentResponse> getPaymentStatus(@Path("orderId") String orderId);
+
+    // ── ADMIN: Booking management ─────────────────────────────────────────────
+    @GET("admin/bookings")
+    Call<List<BookingModel>> getAllAdminBookings(
+            @Query("status") String status,
+            @Query("date") String date
+    );
+
+    @PUT("admin/bookings/{id}/confirm")
+    Call<BookingModel> adminConfirmBooking(@Path("id") Long bookingId);
+
+    @PUT("admin/bookings/{id}/reject")
+    Call<BookingModel> adminRejectBooking(@Path("id") Long bookingId, @Body CancelRequest request);
+
+    @PUT("admin/bookings/{id}/complete")
+    Call<BookingModel> adminCompleteBooking(@Path("id") Long bookingId);
+
+    @PUT("admin/bookings/{id}/no-show")
+    Call<BookingModel> adminMarkNoShow(@Path("id") Long bookingId);
 
     // ── ADMIN: Dashboard ──────────────────────────────────────────────────────
     @GET("admin/dashboard")

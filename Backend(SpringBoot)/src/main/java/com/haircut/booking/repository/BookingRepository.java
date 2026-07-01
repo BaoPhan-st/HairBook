@@ -13,7 +13,11 @@ import java.util.List;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
+    // ── Customer ──────────────────────────────────────────────────────────────
+
     List<Booking> findByUserOrderByCreatedAtDesc(User user);
+
+    // ── Barber schedule ───────────────────────────────────────────────────────
 
     @Query("""
         SELECT b FROM Booking b
@@ -29,6 +33,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             @Param("end")      LocalDateTime end
     );
 
+    // ── Overlap check ────────────────────────────────────────────────────────
+
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("""
         SELECT b FROM Booking b
@@ -43,5 +49,45 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             @Param("newStart")         LocalDateTime newStart,
             @Param("newEnd")           LocalDateTime newEnd,
             @Param("excludeBookingId") Long excludeBookingId
+    );
+
+    // ── Admin: đếm theo status ───────────────────────────────────────────────
+
+    long countByStatus(Booking.Status status);
+
+    // ── Admin: tất cả booking sắp xếp mới nhất trước ─────────────────────────
+
+    List<Booking> findAllByOrderByCreatedAtDesc();
+
+    // ── Admin: filter theo status ─────────────────────────────────────────────
+
+    List<Booking> findByStatusOrderByBookingTimeAsc(Booking.Status status);
+
+    // ── Admin: filter theo ngày (tất cả thợ) ─────────────────────────────────
+
+    @Query("""
+        SELECT b FROM Booking b
+        WHERE b.bookingTime >= :start
+          AND b.bookingTime < :end
+        ORDER BY b.bookingTime ASC
+    """)
+    List<Booking> findByDate(
+            @Param("start") LocalDateTime start,
+            @Param("end")   LocalDateTime end
+    );
+
+    // ── Admin: filter theo status + ngày ─────────────────────────────────────
+
+    @Query("""
+        SELECT b FROM Booking b
+        WHERE b.status = :status
+          AND b.bookingTime >= :start
+          AND b.bookingTime < :end
+        ORDER BY b.bookingTime ASC
+    """)
+    List<Booking> findByStatusAndDate(
+            @Param("status") Booking.Status status,
+            @Param("start")  LocalDateTime start,
+            @Param("end")    LocalDateTime end
     );
 }

@@ -1,8 +1,6 @@
 package com.haircut.app.fragment;
 
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,19 +17,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.haircut.app.R;
+import com.haircut.app.activity.PaymentActivity;
+import com.haircut.app.activity.ReviewActivity;
 import com.haircut.app.adapter.BookingAdapter;
 import com.haircut.app.api.ApiClient;
 import com.haircut.app.api.ApiService;
 import com.haircut.app.model.BookingModel;
-import com.haircut.app.model.CancelRequest;
-import com.haircut.app.model.RescheduleRequest;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,7 +34,7 @@ import retrofit2.Response;
 
 /**
  * HistoryFragment — TV5 implement
- * Hiển thị lịch sử đặt lịch, filter theo trạng thái, hỗ trợ hủy + đổi lịch.
+ * Hiển thị lịch sử đặt lịch, filter theo trạng thái.
  */
 public class HistoryFragment extends Fragment {
 
@@ -69,7 +64,8 @@ public class HistoryFragment extends Fragment {
         tabLayout   = view.findViewById(R.id.tab_layout);
 
         rvBookings.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new BookingAdapter(new ArrayList<>(), this::confirmCancel, this::startReschedule);
+        adapter = new BookingAdapter(new ArrayList<>(), this::onCancelBooking,
+                this::onReviewBooking, this::onPaymentBooking);
         rvBookings.setAdapter(adapter);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -109,15 +105,12 @@ public class HistoryFragment extends Fragment {
         });
     }
 
-    // Vị trí tab: 0 Tất cả | 1 Chờ xác nhận | 2 Đã xác nhận | 3 Đang thực hiện | 4 Hoàn thành | 5 Đã huỷ
     private void filterBookings(int tabPosition) {
         List<BookingModel> filtered;
         switch (tabPosition) {
             case 1: filtered = filter("PENDING"); break;
-            case 2: filtered = filter("CONFIRMED"); break;
-            case 3: filtered = filter("IN_PROGRESS"); break;
-            case 4: filtered = filter("COMPLETED"); break;
-            case 5: filtered = filter("CANCELLED_BY_CUSTOMER", "CANCELLED_BY_SALON", "NO_SHOW"); break;
+            case 2: filtered = filter("CONFIRMED", "COMPLETED"); break;
+            case 3: filtered = filter("CANCELLED"); break;
             default: filtered = new ArrayList<>(allBookings); break;
         }
         adapter.updateData(filtered);
@@ -134,103 +127,44 @@ public class HistoryFragment extends Fragment {
         return result;
     }
 
-    // ───────────────────────────────────────── Hủy lịch ─────────────────────────────────────────
-
-    private void confirmCancel(BookingModel booking) {
-        new AlertDialog.Builder(requireContext())
-                .setTitle("Hủy lịch hẹn")
-                .setMessage("Bạn có chắc muốn hủy lịch hẹn này không? Hành động này không thể hoàn tác.")
-                .setPositiveButton("Hủy lịch", (dialog, which) -> doCancelBooking(booking))
-                .setNegativeButton("Đóng", null)
-                .show();
-    }
-
-    private void doCancelBooking(BookingModel booking) {
-        apiService.cancelBooking(booking.id, new CancelRequest("Khách hàng tự hủy"))
-                .enqueue(new Callback<BookingModel>() {
-                    @Override
-                    public void onResponse(Call<BookingModel> call, Response<BookingModel> response) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(getContext(), "Đã huỷ lịch", Toast.LENGTH_SHORT).show();
-                            loadBookings();
-                        } else {
-                            Toast.makeText(getContext(), parseError(response), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<BookingModel> call, Throwable t) {
-                        Toast.makeText(getContext(), "Lỗi kết nối khi hủy lịch", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    // ───────────────────────────────────────── Đổi lịch ─────────────────────────────────────────
-
-    private void startReschedule(BookingModel booking) {
-        Calendar now = Calendar.getInstance();
-
-        DatePickerDialog datePicker = new DatePickerDialog(
-                requireContext(),
-                (dateView, year, month, dayOfMonth) -> {
-                    TimePickerDialog timePicker = new TimePickerDialog(
-                            requireContext(),
-                            (timeView, hour, minute) -> {
-                                Calendar chosen = Calendar.getInstance();
-                                chosen.set(year, month, dayOfMonth, hour, minute, 0);
-                                String iso = String.format(Locale.getDefault(),
-                                        "%04d-%02d-%02dT%02d:%02d:00",
-                                        year, month + 1, dayOfMonth, hour, minute);
-                                doReschedule(booking, iso);
-                            },
-                            now.get(Calendar.HOUR_OF_DAY),
-                            now.get(Calendar.MINUTE),
-                            true
-                    );
-                    timePicker.setTitle("Chọn giờ mới");
-                    timePicker.show();
-                },
-                now.get(Calendar.YEAR),
-                now.get(Calendar.MONTH),
-                now.get(Calendar.DAY_OF_MONTH)
-        );
-        datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-
-        Calendar maxDate = Calendar.getInstance();
-        maxDate.add(Calendar.DAY_OF_YEAR, 30);
-        datePicker.getDatePicker().setMaxDate(maxDate.getTimeInMillis());
-
-        datePicker.setTitle("Chọn ngày mới");
-        datePicker.show();
-    }
-
-    private void doReschedule(BookingModel booking, String newBookingTimeIso) {
-        apiService.rescheduleBooking(booking.id, new RescheduleRequest(newBookingTimeIso))
-                .enqueue(new Callback<BookingModel>() {
-                    @Override
-                    public void onResponse(Call<BookingModel> call, Response<BookingModel> response) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(getContext(), "Đổi lịch thành công, đang chờ xác nhận lại", Toast.LENGTH_LONG).show();
-                            loadBookings();
-                        } else {
-                            Toast.makeText(getContext(), parseError(response), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<BookingModel> call, Throwable t) {
-                        Toast.makeText(getContext(), "Lỗi kết nối khi đổi lịch", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    private String parseError(Response<?> resp) {
-        try {
-            if (resp.errorBody() != null) {
-                String raw = resp.errorBody().string();
-                JSONObject obj = new JSONObject(raw);
-                if (obj.has("error")) return obj.getString("error");
+    private void onCancelBooking(Long bookingId) {
+        apiService.cancelBooking(bookingId).enqueue(new Callback<BookingModel>() {
+            @Override
+            public void onResponse(Call<BookingModel> call, Response<BookingModel> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getContext(), "Đã huỷ lịch", Toast.LENGTH_SHORT).show();
+                    loadBookings();
+                }
             }
-        } catch (Exception ignored) { }
-        return "Thao tác thất bại, vui lòng thử lại";
+            @Override
+            public void onFailure(Call<BookingModel> call, Throwable t) {
+                Toast.makeText(getContext(), "Lỗi khi huỷ lịch", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void onReviewBooking(BookingModel booking) {
+        Intent intent = new Intent(getContext(), ReviewActivity.class);
+        intent.putExtra(ReviewActivity.EXTRA_BOOKING_ID, booking.id);
+        if (booking.barber != null) {
+            intent.putExtra(ReviewActivity.EXTRA_BARBER_NAME, booking.barber.name);
+        }
+        if (booking.service != null) {
+            intent.putExtra(ReviewActivity.EXTRA_SERVICE_NAME, booking.service.name);
+        }
+        startActivity(intent);
+    }
+
+    private void onPaymentBooking(BookingModel booking) {
+        Intent intent = new Intent(getContext(), PaymentActivity.class);
+        intent.putExtra(PaymentActivity.EXTRA_BOOKING_ID, booking.id);
+        if (booking.service != null) {
+            if (booking.service.price != null) {
+                intent.putExtra(PaymentActivity.EXTRA_AMOUNT, booking.service.price);
+            }
+            intent.putExtra(PaymentActivity.EXTRA_SERVICE, booking.service.name);
+        }
+        startActivity(intent);
     }
 
     private void showEmpty(boolean empty) {

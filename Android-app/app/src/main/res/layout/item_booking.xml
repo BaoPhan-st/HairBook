@@ -114,6 +114,37 @@
             android:visibility="gone"
             android:layout_marginBottom="12dp"/>
 
+        <!-- Đánh giá của khách (nếu đã đánh giá booking này) -->
+        <LinearLayout
+            android:id="@+id/layout_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_edittext_rounded"
+            android:padding="10dp"
+            android:visibility="gone"
+            android:layout_marginBottom="12dp">
+
+            <RatingBar
+                android:id="@+id/rating_bar_review"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:stepSize="1"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/tv_review_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nhận xét của bạn"
+                android:textSize="13sp"
+                android:textColor="#616161"
+                android:visibility="gone"/>
+        </LinearLayout>
+
         <!-- Divider -->
         <View
             android:layout_width="match_parent"
@@ -140,15 +171,23 @@
                 android:visibility="gone"/>
 
             <Button
-                android:id="@+id/btn_reschedule"
+                android:id="@+id/btn_payment"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
-                android:text="Đổi lịch"
+                android:text="Thanh toán"
                 android:textSize="13sp"
-                android:backgroundTint="#F5F5F5"
-                android:textColor="#7B1FA2"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_marginStart="4dp"
+                android:backgroundTint="#FF9800"
+                android:layout_marginStart="8dp"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btn_review"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Đánh giá"
+                android:textSize="13sp"
+                android:backgroundTint="#2196F3"
+                android:layout_marginStart="8dp"
                 android:visibility="gone"/>
 
             <Button
@@ -161,6 +200,7 @@
                 android:layout_marginStart="8dp"
                 android:visibility="gone"/>
         </LinearLayout>
+
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
