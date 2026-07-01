@@ -33,10 +33,9 @@ public class PaymentService {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new IllegalArgumentException("Booking không tồn tại"));
 
-        paymentRepository.findByBookingId(bookingId).ifPresent(existing -> {
-            if (existing.getStatus() == Payment.Status.SUCCESS)
-                throw new IllegalArgumentException("Booking này đã được thanh toán");
-        });
+        Payment existing = paymentRepository.findByBookingId(bookingId).orElse(null);
+        if (existing != null && existing.getStatus() == Payment.Status.SUCCESS)
+            throw new IllegalArgumentException("Booking này đã được thanh toán");
 
         String orderId = "HB" + System.currentTimeMillis();
         Double amount = booking.getService().getPrice();
@@ -45,14 +44,15 @@ public class PaymentService {
         String paymentUrl = buildPaymentUrl(methodEnum, orderId, amount,
                 returnUrl != null ? returnUrl : vnpayReturnUrl);
 
-        Payment payment = Payment.builder()
-                .booking(booking)
-                .amount(amount)
-                .method(Payment.Method.valueOf(methodEnum))
-                .status(Payment.Status.PENDING)
-                .orderId(orderId)
-                .paymentUrl(paymentUrl)
-                .build();
+        // Nếu booking đã có payment PENDING/FAILED từ trước -> cập nhật lại bản ghi đó
+        // thay vì tạo mới (booking_id là UNIQUE, insert mới sẽ vi phạm ràng buộc)
+        Payment payment = existing != null ? existing : Payment.builder().booking(booking).build();
+        payment.setAmount(amount);
+        payment.setMethod(Payment.Method.valueOf(methodEnum));
+        payment.setStatus(Payment.Status.PENDING);
+        payment.setOrderId(orderId);
+        payment.setPaymentUrl(paymentUrl);
+        payment.setPaidAt(null);
 
         paymentRepository.save(payment);
 

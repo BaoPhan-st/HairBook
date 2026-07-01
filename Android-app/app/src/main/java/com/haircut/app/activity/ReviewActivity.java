@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONObject;
+
 import com.haircut.app.R;
 import com.haircut.app.api.ApiClient;
 import com.haircut.app.model.ReviewModel;
@@ -33,6 +35,7 @@ public class ReviewActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private TextView tvTitle;
     private long bookingId;
+    private boolean hasExistingReview = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class ReviewActivity extends AppCompatActivity {
         String barberName = getIntent().getStringExtra(EXTRA_BARBER_NAME);
         String serviceName = getIntent().getStringExtra(EXTRA_SERVICE_NAME);
         initViews(barberName, serviceName);
-        loadExistingReview();
+        checkExistingReview();
     }
 
     private void initViews(String barberName, String serviceName) {
@@ -65,24 +68,33 @@ public class ReviewActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(v -> submitReview());
     }
 
-    private void loadExistingReview() {
+    private void checkExistingReview() {
+        progressBar.setVisibility(View.VISIBLE);
+        btnSubmit.setEnabled(false);
         ApiClient.getService(this).getReviewByBooking(bookingId)
                 .enqueue(new Callback<ReviewModel>() {
                     @Override
                     public void onResponse(Call<ReviewModel> call, Response<ReviewModel> response) {
+                        progressBar.setVisibility(View.GONE);
+                        btnSubmit.setEnabled(true);
                         if (response.isSuccessful() && response.body() != null) {
+                            // Booking này đã có đánh giá -> điền sẵn, vẫn cho sửa lại
                             ReviewModel r = response.body();
                             ratingBar.setRating(r.rating);
                             etComment.setText(r.comment);
-                            ratingBar.setIsIndicator(true);
-                            etComment.setEnabled(false);
-                            btnSubmit.setEnabled(false);
-                            btnSubmit.setText("Đã đánh giá ✓");
+                            hasExistingReview = true;
+                            btnSubmit.setText("Cập nhật đánh giá");
+                        } else {
+                            // Chưa có đánh giá (404) -> form trống cho người dùng nhập
+                            btnSubmit.setText("Gửi đánh giá");
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ReviewModel> call, Throwable t) {
+                        progressBar.setVisibility(View.GONE);
+                        // Lỗi mạng khi kiểm tra -> vẫn để người dùng nhập bình thường
+                        btnSubmit.setEnabled(true);
                     }
                 });
     }
@@ -107,11 +119,22 @@ public class ReviewActivity extends AppCompatActivity {
                 setLoading(false);
                 if (response.isSuccessful()) {
                     Toast.makeText(ReviewActivity.this,
-                            "Cảm ơn bạn đã đánh giá! ⭐", Toast.LENGTH_LONG).show();
+                            hasExistingReview ? "Đã cập nhật đánh giá của bạn ⭐" : "Cảm ơn bạn đã đánh giá! ⭐",
+                            Toast.LENGTH_LONG).show();
                     finish();
                 } else {
-                    Toast.makeText(ReviewActivity.this,
-                            "Gửi đánh giá thất bại, thử lại nhé", Toast.LENGTH_SHORT).show();
+                    String message = "Gửi đánh giá thất bại, thử lại nhé";
+                    try {
+                        if (response.errorBody() != null) {
+                            String raw = response.errorBody().string();
+                            JSONObject json = new JSONObject(raw);
+                            if (json.has("error")) {
+                                message = json.getString("error");
+                            }
+                        }
+                    } catch (Exception ignored) {
+                    }
+                    Toast.makeText(ReviewActivity.this, message, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -127,6 +150,10 @@ public class ReviewActivity extends AppCompatActivity {
     private void setLoading(boolean loading) {
         progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
         btnSubmit.setEnabled(!loading);
-        btnSubmit.setText(loading ? "Đang gửi..." : "Gửi đánh giá");
+        if (loading) {
+            btnSubmit.setText(hasExistingReview ? "Đang cập nhật..." : "Đang gửi...");
+        } else {
+            btnSubmit.setText(hasExistingReview ? "Cập nhật đánh giá" : "Gửi đánh giá");
+        }
     }
 }

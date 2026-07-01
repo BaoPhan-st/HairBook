@@ -8,4 +8,5 @@ public class BookingModel {
     @SerializedName("status") public String status;
     @SerializedName("note") public String note;
     @SerializedName("createdAt") public String createdAt;
+    @SerializedName("review") public ReviewModel review;
 }

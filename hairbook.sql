@@ -115,3 +115,6 @@ INSERT INTO `users` VALUES (2, 'khach@gmail.com', '$2a$10$TqF6/D8wY2HqaKibgNV1S.
 INSERT INTO `users` VALUES (3, '12345', '$2a$10$ebW26y7cpu.KBwO3IOkGfOVVDn/ial8LBjPyqBwn6QSMfNu0jQpZC', '12345', '12345', 'CUSTOMER', '2026-06-04 16:17:52');
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+

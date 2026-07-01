@@ -1,5 +1,6 @@
 package com.haircut.app.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.haircut.app.R;
+import com.haircut.app.activity.PaymentActivity;
+import com.haircut.app.activity.ReviewActivity;
 import com.haircut.app.adapter.BookingAdapter;
 import com.haircut.app.api.ApiClient;
 import com.haircut.app.api.ApiService;
@@ -61,7 +64,8 @@ public class HistoryFragment extends Fragment {
         tabLayout   = view.findViewById(R.id.tab_layout);
 
         rvBookings.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new BookingAdapter(new ArrayList<>(), this::onCancelBooking);
+        adapter = new BookingAdapter(new ArrayList<>(), this::onCancelBooking,
+                this::onReviewBooking, this::onPaymentBooking);
         rvBookings.setAdapter(adapter);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -137,6 +141,30 @@ public class HistoryFragment extends Fragment {
                 Toast.makeText(getContext(), "Lỗi khi huỷ lịch", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void onReviewBooking(BookingModel booking) {
+        Intent intent = new Intent(getContext(), ReviewActivity.class);
+        intent.putExtra(ReviewActivity.EXTRA_BOOKING_ID, booking.id);
+        if (booking.barber != null) {
+            intent.putExtra(ReviewActivity.EXTRA_BARBER_NAME, booking.barber.name);
+        }
+        if (booking.service != null) {
+            intent.putExtra(ReviewActivity.EXTRA_SERVICE_NAME, booking.service.name);
+        }
+        startActivity(intent);
+    }
+
+    private void onPaymentBooking(BookingModel booking) {
+        Intent intent = new Intent(getContext(), PaymentActivity.class);
+        intent.putExtra(PaymentActivity.EXTRA_BOOKING_ID, booking.id);
+        if (booking.service != null) {
+            if (booking.service.price != null) {
+                intent.putExtra(PaymentActivity.EXTRA_AMOUNT, booking.service.price);
+            }
+            intent.putExtra(PaymentActivity.EXTRA_SERVICE, booking.service.name);
+        }
+        startActivity(intent);
     }
 
     private void showEmpty(boolean empty) {

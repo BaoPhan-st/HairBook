@@ -35,8 +35,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             token = authHeader.substring(7);
             try {
                 username = jwtUtil.extractUsername(token);
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                System.out.println("[JWT] Token không hợp lệ cho request "
+                        + request.getMethod() + " " + request.getRequestURI()
+                        + " -> " + e.getClass().getSimpleName() + ": " + e.getMessage());
             }
+        } else {
+            System.out.println("[JWT] Request " + request.getMethod() + " " + request.getRequestURI()
+                    + " không có header Authorization (hoặc không đúng dạng 'Bearer ...')");
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -50,6 +56,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                 userDetails.getAuthorities()
                         );
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+            } else {
+                System.out.println("[JWT] validateToken() = false cho user '" + username
+                        + "' (token hết hạn hoặc username trong token không khớp UserDetails)");
             }
         }
 

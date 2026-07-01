@@ -56,14 +56,22 @@ public class HomeFragment extends Fragment {
         progressBar = view.findViewById(R.id.progress_bar);
 
         rvServices.setLayoutManager(
-            new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+                new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvBarbers.setLayoutManager(
-            new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+                new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         view.findViewById(R.id.btn_book_now).setOnClickListener(v ->
-            startActivity(new Intent(getActivity(), BookingActivity.class)));
+                startActivity(new Intent(getActivity(), BookingActivity.class)));
 
         loadData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (apiService != null) {
+            loadBarbers(); // Refresh rating khi quay lại (VD sau khi vừa gửi/cập nhật đánh giá)
+        }
     }
 
     private void loadData() {
@@ -79,7 +87,7 @@ public class HomeFragment extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
                     rvServices.setAdapter(new ServiceAdapter(response.body(), service ->
-                        startActivity(new Intent(getActivity(), BookingActivity.class))));
+                            startActivity(new Intent(getActivity(), BookingActivity.class))));
                 }
             }
             @Override

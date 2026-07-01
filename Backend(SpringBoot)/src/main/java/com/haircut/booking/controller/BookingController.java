@@ -23,6 +23,7 @@ public class BookingController {
     private final UserService          userService;
     private final BarberRepository     barberRepository;
     private final ServiceRepository    serviceRepository;
+    private final ReviewRepository     reviewRepository;
 
     @Data
     public static class BookingRequest {
@@ -98,6 +99,7 @@ public class BookingController {
     }
 
     private Map<String, Object> toDto(Booking b) {
+        Review review = reviewRepository.findByBookingId(b.getId()).orElse(null);
         return Map.of(
                 "id",          b.getId(),
                 "barber",      b.getBarber() != null ? Map.of(
@@ -116,7 +118,11 @@ public class BookingController {
                 "bookingTime", b.getBookingTime().toString(),
                 "status",      b.getStatus().name(),
                 "note",        b.getNote() != null ? b.getNote() : "",
-                "createdAt",   b.getCreatedAt().toString()
+                "createdAt",   b.getCreatedAt().toString(),
+                "review",      review != null ? Map.of(
+                        "rating",  review.getRating(),
+                        "comment", review.getComment() != null ? review.getComment() : ""
+                ) : Map.of()
         );
     }
 }
