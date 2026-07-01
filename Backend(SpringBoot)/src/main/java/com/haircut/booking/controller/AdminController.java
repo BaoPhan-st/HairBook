@@ -281,6 +281,27 @@ public class AdminController {
     }
 
     /**
+     * Admin bắt đầu thực hiện: CONFIRMED → IN_PROGRESS.
+     */
+    @PutMapping("/bookings/{id}/start")
+    public ResponseEntity<?> startBooking(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        try { requireAdmin(userDetails); } catch (BookingService.ForbiddenException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", e.getMessage()));
+        }
+        try {
+            Booking started = adminBookingService.startBooking(id);
+            return ResponseEntity.ok(BookingResponse.from(started));
+        } catch (BookingService.NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
+        } catch (BookingService.BadRequestException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    /**
      * Admin đánh dấu booking hoàn thành: CONFIRMED / IN_PROGRESS → COMPLETED.
      */
     @PutMapping("/bookings/{id}/complete")

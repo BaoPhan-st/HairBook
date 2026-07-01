@@ -146,7 +146,7 @@
                 style="@style/Widget.MaterialComponents.Button"/>
         </LinearLayout>
 
-        <!-- Complete + No-show buttons — chỉ hiện khi CONFIRMED -->
+        <!-- Complete + No-show + Start buttons — chỉ hiện khi CONFIRMED -->
         <LinearLayout
             android:id="@+id/layout_actions_confirmed"
             android:layout_width="match_parent"
@@ -160,18 +160,47 @@
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:text="Không đến"
-                android:textSize="13sp"
+                android:textSize="12sp"
                 android:textColor="#9E9E9E"
                 style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+            <Button
+                android:id="@+id/btn_start"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Bắt đầu"
+                android:textSize="12sp"
+                android:backgroundTint="#2196F3"
+                android:layout_marginStart="6dp"
+                style="@style/Widget.MaterialComponents.Button"/>
 
             <Button
                 android:id="@+id/btn_complete"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:text="Hoàn thành"
+                android:textSize="12sp"
+                android:backgroundTint="#4CAF50"
+                android:layout_marginStart="6dp"
+                style="@style/Widget.MaterialComponents.Button"/>
+        </LinearLayout>
+
+        <!-- Complete button — chỉ hiện khi IN_PROGRESS (không cho No-show ở bước này nữa) -->
+        <LinearLayout
+            android:id="@+id/layout_actions_in_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/btn_complete_in_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Hoàn thành"
                 android:textSize="13sp"
                 android:backgroundTint="#4CAF50"
-                android:layout_marginStart="8dp"
                 style="@style/Widget.MaterialComponents.Button"/>
         </LinearLayout>
 

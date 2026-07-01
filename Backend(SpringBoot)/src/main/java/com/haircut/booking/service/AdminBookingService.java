@@ -72,6 +72,22 @@ public class AdminBookingService {
         return bookingRepository.save(booking);
     }
 
+    // ── Bắt đầu thực hiện: CONFIRMED → IN_PROGRESS ───────────────────────────
+
+    @Transactional
+    public Booking startBooking(Long bookingId) {
+        Booking booking = findOrThrow(bookingId);
+
+        if (booking.getStatus() != Booking.Status.CONFIRMED) {
+            throw new BookingService.BadRequestException(
+                    "Chỉ có thể chuyển sang Đang thực hiện từ trạng thái CONFIRMED. " +
+                            "Trạng thái hiện tại: " + booking.getStatus().name());
+        }
+
+        booking.setStatus(Booking.Status.IN_PROGRESS);
+        return bookingRepository.save(booking);
+    }
+
     // ── Hoàn thành booking: CONFIRMED hoặc IN_PROGRESS → COMPLETED ───────────
 
     @Transactional

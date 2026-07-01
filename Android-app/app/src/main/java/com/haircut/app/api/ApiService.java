@@ -17,7 +17,10 @@ import com.haircut.app.model.RescheduleRequest;
 import com.haircut.app.model.ChatRequest;
 import com.haircut.app.model.ChatResponse;
 import com.haircut.app.model.LoginRequest;
+import com.haircut.app.model.PaymentRequest;
+import com.haircut.app.model.PaymentResponse;
 import com.haircut.app.model.RegisterRequest;
+import com.haircut.app.model.RescheduleRequest;
 import com.haircut.app.model.ReviewModel;
 import com.haircut.app.model.ReviewRequest;
 import com.haircut.app.model.ServiceModel;
@@ -131,6 +134,9 @@ public interface ApiService {
 
     @PUT("admin/bookings/{id}/confirm")
     Call<BookingModel> adminConfirmBooking(@Path("id") Long bookingId);
+
+    @PUT("admin/bookings/{id}/start")
+    Call<BookingModel> adminStartBooking(@Path("id") Long bookingId);
 
     @PUT("admin/bookings/{id}/reject")
     Call<BookingModel> adminRejectBooking(@Path("id") Long bookingId, @Body CancelRequest request);

@@ -19,21 +19,31 @@ import java.util.Locale;
 
 public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHolder> {
 
-    public interface OnCancelClick { void onCancel(Long bookingId); }
-    public interface OnReviewClick { void onReview(BookingModel booking); }
-    public interface OnPaymentClick { void onPayment(BookingModel booking); }
+    public interface OnCancelClick      { void onCancel(BookingModel booking); }
+    public interface OnReviewClick      { void onReview(BookingModel booking); }
+    public interface OnPaymentClick     { void onPayment(BookingModel booking); }
+    public interface OnRebookClick      { void onRebook(BookingModel booking); }
+    public interface OnRescheduleClick  { void onReschedule(BookingModel booking); }
 
     private List<BookingModel> bookings;
-    private final OnCancelClick cancelListener;
-    private final OnReviewClick reviewListener;
-    private final OnPaymentClick paymentListener;
+    private final OnCancelClick     cancelListener;
+    private final OnReviewClick     reviewListener;
+    private final OnPaymentClick    paymentListener;
+    private final OnRebookClick     rebookListener;
+    private final OnRescheduleClick rescheduleListener;
 
-    public BookingAdapter(List<BookingModel> bookings, OnCancelClick cancelListener,
-                          OnReviewClick reviewListener, OnPaymentClick paymentListener) {
+    public BookingAdapter(List<BookingModel> bookings,
+                          OnCancelClick cancelListener,
+                          OnReviewClick reviewListener,
+                          OnPaymentClick paymentListener,
+                          OnRebookClick rebookListener,
+                          OnRescheduleClick rescheduleListener) {
         this.bookings = bookings;
         this.cancelListener = cancelListener;
         this.reviewListener = reviewListener;
         this.paymentListener = paymentListener;
+        this.rebookListener = rebookListener;
+        this.rescheduleListener = rescheduleListener;
     }
 
     public void updateData(List<BookingModel> newData) {
@@ -50,56 +60,81 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         BookingModel b = bookings.get(position);
+        String status = b.status != null ? b.status : "";
 
         holder.tvBookingTime.setText(formatDateTime(b.bookingTime));
 
         if (b.service != null) {
-            holder.tvServiceName.setText(b.service.name);
+            holder.tvServiceName.setText(b.service.name != null ? b.service.name : "");
             if (b.service.price != null) {
-                NumberFormat fmt = NumberFormat.getNumberInstance(new Locale("vi","VN"));
+                NumberFormat fmt = NumberFormat.getNumberInstance(new Locale("vi", "VN"));
                 holder.tvPrice.setText(fmt.format(b.service.price.longValue()) + "đ");
+            } else {
+                holder.tvPrice.setText("");
             }
+        } else {
+            holder.tvServiceName.setText("");
+            holder.tvPrice.setText("");
         }
 
-        if (b.barber != null) holder.tvBarberName.setText(b.barber.name);
+        holder.tvBarberName.setText(b.barber != null && b.barber.name != null ? b.barber.name : "—");
 
-        if (b.note != null && !b.note.isEmpty()) {
+        if (b.note != null && !b.note.trim().isEmpty()) {
             holder.tvNote.setText("Ghi chú: " + b.note);
             holder.tvNote.setVisibility(View.VISIBLE);
         } else {
             holder.tvNote.setVisibility(View.GONE);
         }
 
-        setStatusUI(holder, b.status);
+        setStatusUI(holder, status);
 
-        if ("PENDING".equals(b.status)) {
+        // ── Reset toàn bộ nút trước khi áp quy tắc mới (an toàn khi ViewHolder tái sử dụng) ──
+        holder.btnCancel.setVisibility(View.GONE);
+        holder.btnCancel.setOnClickListener(null);
+        holder.btnReschedule.setVisibility(View.GONE);
+        holder.btnReschedule.setOnClickListener(null);
+        holder.btnRebook.setVisibility(View.GONE);
+        holder.btnRebook.setOnClickListener(null);
+        holder.btnPayment.setVisibility(View.GONE);
+        holder.btnPayment.setOnClickListener(null);
+        holder.btnReview.setVisibility(View.GONE);
+        holder.btnReview.setOnClickListener(null);
+
+        boolean isPendingOrConfirmed = "PENDING".equals(status) || "CONFIRMED".equals(status);
+        boolean isRebookable = "COMPLETED".equals(status)
+                || "CANCELLED_BY_CUSTOMER".equals(status)
+                || "CANCELLED_BY_SALON".equals(status)
+                || "NO_SHOW".equals(status);
+
+        // Huỷ: PENDING hoặc CONFIRMED (server sẽ tự chặn nếu còn dưới 2h trước giờ hẹn)
+        if (isPendingOrConfirmed) {
             holder.btnCancel.setVisibility(View.VISIBLE);
-            holder.btnCancel.setOnClickListener(v -> cancelListener.onCancel(b.id));
-        } else {
-            holder.btnCancel.setVisibility(View.GONE);
+            holder.btnCancel.setOnClickListener(v -> cancelListener.onCancel(b));
         }
 
-        if ("COMPLETED".equals(b.status) || "CANCELLED".equals(b.status)) {
+        // Đổi lịch: PENDING hoặc CONFIRMED
+        if (isPendingOrConfirmed) {
+            holder.btnReschedule.setVisibility(View.VISIBLE);
+            holder.btnReschedule.setOnClickListener(v -> rescheduleListener.onReschedule(b));
+        }
+
+        // Đặt lại: COMPLETED, CANCELLED_BY_CUSTOMER, CANCELLED_BY_SALON, NO_SHOW
+        if (isRebookable) {
             holder.btnRebook.setVisibility(View.VISIBLE);
-        } else {
-            holder.btnRebook.setVisibility(View.GONE);
+            holder.btnRebook.setOnClickListener(v -> rebookListener.onRebook(b));
         }
 
-        // Thanh toán: hiện khi đơn còn hiệu lực và chưa hoàn thành/huỷ
-        if ("PENDING".equals(b.status) || "CONFIRMED".equals(b.status)) {
+        // Thanh toán: PENDING hoặc CONFIRMED
+        if (isPendingOrConfirmed) {
             holder.btnPayment.setVisibility(View.VISIBLE);
             holder.btnPayment.setOnClickListener(v -> paymentListener.onPayment(b));
-        } else {
-            holder.btnPayment.setVisibility(View.GONE);
         }
 
-        // Đánh giá: chỉ hiện khi đơn đã hoàn thành
-        if ("COMPLETED".equals(b.status)) {
+        // Đánh giá: chỉ khi đã COMPLETED
+        if ("COMPLETED".equals(status)) {
             holder.btnReview.setVisibility(View.VISIBLE);
-            holder.btnReview.setText("Đánh giá");
+            holder.btnReview.setText(b.review != null && b.review.rating > 0 ? "Sửa đánh giá" : "Đánh giá");
             holder.btnReview.setOnClickListener(v -> reviewListener.onReview(b));
-        } else {
-            holder.btnReview.setVisibility(View.GONE);
         }
 
         // Hiện lại đánh giá đã gửi (nếu có) ngay dưới ghi chú
@@ -112,16 +147,12 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
             } else {
                 holder.tvReviewComment.setVisibility(View.GONE);
             }
-            if ("COMPLETED".equals(b.status)) {
-                holder.btnReview.setText("Sửa đánh giá");
-            }
         } else {
             holder.layoutReview.setVisibility(View.GONE);
         }
     }
 
     private void setStatusUI(ViewHolder holder, String status) {
-        if (status == null) return;
         switch (status) {
             case "PENDING":
                 holder.tvStatus.setText("Chờ xác nhận");
@@ -131,14 +162,29 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
                 holder.tvStatus.setText("Đã xác nhận");
                 holder.tvStatus.setTextColor(0xFF4CAF50);
                 break;
+            case "IN_PROGRESS":
+                holder.tvStatus.setText("Đang thực hiện");
+                holder.tvStatus.setTextColor(0xFF2196F3);
+                break;
             case "COMPLETED":
                 holder.tvStatus.setText("Hoàn thành");
                 holder.tvStatus.setTextColor(0xFF2196F3);
                 break;
-            case "CANCELLED":
-                holder.tvStatus.setText("Đã huỷ");
+            case "CANCELLED_BY_CUSTOMER":
+                holder.tvStatus.setText("Bạn đã hủy");
                 holder.tvStatus.setTextColor(0xFFF44336);
                 break;
+            case "CANCELLED_BY_SALON":
+                holder.tvStatus.setText("Salon đã hủy");
+                holder.tvStatus.setTextColor(0xFFF44336);
+                break;
+            case "NO_SHOW":
+                holder.tvStatus.setText("Không đến");
+                holder.tvStatus.setTextColor(0xFF9E9E9E);
+                break;
+            default:
+                holder.tvStatus.setText(status);
+                holder.tvStatus.setTextColor(0xFF9E9E9E);
         }
     }
 
@@ -146,7 +192,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
         if (iso == null) return "";
         try {
             String[] parts = iso.split("T");
-            String datePart = parts[0]; // 2024-01-15
+            String datePart = parts[0]; // 2026-01-15
             String timePart = parts[1].substring(0, 5); // 10:00
             String[] dateNums = datePart.split("-");
             return timePart + " - " + dateNums[2] + "/" + dateNums[1] + "/" + dateNums[0];
@@ -155,11 +201,11 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
         }
     }
 
-    @Override public int getItemCount() { return bookings.size(); }
+    @Override public int getItemCount() { return bookings == null ? 0 : bookings.size(); }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvBookingTime, tvStatus, tvServiceName, tvPrice, tvBarberName, tvNote, tvReviewComment;
-        Button btnCancel, btnRebook, btnPayment, btnReview;
+        Button btnCancel, btnReschedule, btnRebook, btnPayment, btnReview;
         View layoutReview;
         RatingBar ratingBarReview;
         ViewHolder(View v) {
@@ -171,6 +217,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
             tvBarberName     = v.findViewById(R.id.tv_barber_name);
             tvNote           = v.findViewById(R.id.tv_note);
             btnCancel        = v.findViewById(R.id.btn_cancel);
+            btnReschedule    = v.findViewById(R.id.btn_reschedule);
             btnRebook        = v.findViewById(R.id.btn_rebook);
             btnPayment       = v.findViewById(R.id.btn_payment);
             btnReview        = v.findViewById(R.id.btn_review);
