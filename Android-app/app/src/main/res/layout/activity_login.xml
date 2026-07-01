@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F5">
@@ -62,8 +63,7 @@
             android:hint="Mật khẩu"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:passwordToggleEnabled="true"
-            android:layout_marginBottom="24dp"
-            xmlns:app="http://schemas.android.com/apk/res-auto">
+            android:layout_marginBottom="24dp">
 
             <EditText
                 android:id="@+id/et_password"
@@ -89,6 +89,50 @@
             android:backgroundTint="@color/purple_700"
             android:layout_marginBottom="16dp"/>
 
+        <!-- Divider HOẶC -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="#BDBDBD"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  HOẶC  "
+                android:textSize="12sp"
+                android:textColor="#9E9E9E"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="#BDBDBD"/>
+        </LinearLayout>
+
+        <!-- Nút đăng nhập Google -->
+        <Button
+            android:id="@+id/btn_google_login"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="Đăng nhập với Google"
+            android:textSize="15sp"
+            android:textColor="#3C4043"
+            android:backgroundTint="#FFFFFF"
+            android:drawableStart="@drawable/ic_google"
+            android:drawablePadding="8dp"
+            android:layout_marginBottom="16dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="#DADCE0"
+            app:strokeWidth="1dp"/>
+
         <TextView
             android:id="@+id/tv_register"
             android:layout_width="wrap_content"
@@ -99,3 +143,4 @@
 
     </LinearLayout>
 </ScrollView>
+

@@ -6,6 +6,7 @@ import com.haircut.app.model.BookingModel;
 import com.haircut.app.model.BookingRequest;
 import com.haircut.app.model.ChatRequest;
 import com.haircut.app.model.ChatResponse;
+import com.haircut.app.model.GoogleLoginRequest;
 import com.haircut.app.model.LoginRequest;
 import com.haircut.app.model.RegisterRequest;
 import com.haircut.app.model.ServiceModel;
@@ -25,8 +26,12 @@ public interface ApiService {
     @POST("auth/register")
     Call<AuthResponse> register(@Body RegisterRequest request);
 
+    @POST("auth/google")
+    Call<AuthResponse> googleLogin(@Body GoogleLoginRequest request);
+
     @GET("auth/me")
     Call<UserModel> getCurrentUser();
+
 
     // ---- SERVICES ----
     @GET("services")

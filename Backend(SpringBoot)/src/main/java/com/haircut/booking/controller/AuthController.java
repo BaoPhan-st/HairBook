@@ -36,6 +36,11 @@ public class AuthController {
     }
 
     @Data
+    public static class GoogleLoginRequest {
+        private String idToken;
+    }
+
+    @Data
     public static class AuthResponse {
         private String token;
         private String email;
@@ -75,6 +80,21 @@ public class AuthController {
         }
     }
 
+    @PostMapping("/google")
+    public ResponseEntity<?> googleLogin(@RequestBody GoogleLoginRequest req) {
+        try {
+            User user = userService.loginOrRegisterWithGoogle(req.getIdToken());
+            String token = jwtUtil.generateToken(user.getEmail());
+            return ResponseEntity.ok(new AuthResponse(token, user.getEmail(), user.getFullName()));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Đăng nhập Google thất bại: " + e.getMessage()));
+        }
+    }
+
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(@RequestHeader("Authorization") String authHeader) {
         String token = authHeader.substring(7);
@@ -87,4 +107,4 @@ public class AuthController {
                 "phone",    user.getPhone() != null ? user.getPhone() : ""
         ));
     }
-}
+}
