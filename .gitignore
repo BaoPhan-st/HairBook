@@ -4,3 +4,29 @@ Backend(SpringBoot)/src/main/resources/application.properties
 
 # Spring Boot build output
 Backend(SpringBoot)/target/
+
+# Android Studio / IntelliJ IDEA
+.idea/
+**/.idea/
+*.iml
+
+# Local Android configuration
+local.properties
+
+# Gradle cache and generated build output
+.gradle/
+**/.gradle/
+build/
+**/build/
+
+# Android generated packages
+*.apk
+*.aab
+
+# Java / Spring Boot compiled output
+**/target/
+*.class
+
+# Windows / macOS metadata
+Thumbs.db
+.DS_Store

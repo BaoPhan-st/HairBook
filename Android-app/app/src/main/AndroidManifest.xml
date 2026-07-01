@@ -79,9 +79,16 @@
         <activity
             android:name=".admin.AdminUserDetailActivity"
             android:exported="false"/>
-        <activity android:name=".activity.BarberManagementActivity" />
-        <activity android:name=".activity.BarberFormActivity" />
-        <activity android:name=".activity.BarberScheduleActivity" />
+
+        <!-- Quản lý lịch đặt -->
+        <activity
+            android:name=".admin.AdminBookingActivity"
+            android:exported="false"/>
+
+        <!-- Quản lý thợ -->
+        <activity android:name=".activity.BarberManagementActivity" android:exported="false"/>
+        <activity android:name=".activity.BarberFormActivity"       android:exported="false"/>
+        <activity android:name=".activity.BarberScheduleActivity"   android:exported="false"/>
 
     </application>
 
