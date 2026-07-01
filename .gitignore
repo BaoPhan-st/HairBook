@@ -31,3 +31,5 @@ Thumbs.db
 
 # Local config
 local.properties
+
+/Backend(SpringBoot)/src/main/resources
