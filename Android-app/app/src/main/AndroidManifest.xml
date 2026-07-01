@@ -3,6 +3,10 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
 
     <application
         android:allowBackup="true"
@@ -13,7 +17,6 @@
         android:theme="@style/Theme.HairBook"
         android:usesCleartextTraffic="true">
 
-        <!-- Launcher -->
         <activity
             android:name=".activity.LoginActivity"
             android:exported="true">
@@ -23,31 +26,46 @@
             </intent-filter>
         </activity>
 
-        <!-- Main hub (after login) -->
         <activity
             android:name=".activity.MainActivity"
             android:exported="false"/>
 
-        <!-- TV2: Register -->
         <activity
             android:name=".activity.RegisterActivity"
             android:exported="false"/>
 
-        <!-- TV3: Booking -->
         <activity
             android:name=".activity.BookingActivity"
             android:exported="false"/>
 
-        <!-- Profile -->
         <activity
             android:name=".activity.ProfileActivity"
             android:exported="false"/>
 
-        <!-- AI Chat -->
         <activity
             android:name=".activity.AIChatActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name=".activity.ReviewActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".activity.PaymentActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="hairbook" android:host="payment"/>
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".notification.ReminderReceiver"
+            android:exported="false"/>
 
         <!-- Admin screens -->
         <activity

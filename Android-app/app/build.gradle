@@ -14,14 +14,14 @@ android {
         versionName "1.0"
 
         // Emulator: 10.0.2.2  |  Điện thoại thật: IP LAN, vd 192.168.1.5
-        buildConfigField "String", "BASE_URL", '"http://10.0.2.2:8080/api/"'
+        buildConfigField "String", "BASE_URL", '"http://192.168.1.6:8080/api/"'
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_URL", '"https://your-production-server.com/api/"'
+            buildConfigField "String", "BASE_URL", "\"http://192.168.1.6:8080/api/\""
         }
     }
 
@@ -72,4 +72,5 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
 }

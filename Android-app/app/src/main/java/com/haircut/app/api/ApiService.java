@@ -85,6 +85,20 @@ public interface ApiService {
     @POST("ai/chat")
     Call<ChatResponse> sendChatMessage(@Body ChatRequest request);
 
+    // ---- REVIEW ----
+    @POST("reviews")
+    Call<ReviewModel> submitReview(@Body ReviewRequest request);
+
+    @GET("reviews/booking/{bookingId}")
+    Call<ReviewModel> getReviewByBooking(@Path("bookingId") Long bookingId);
+
+    // ---- PAYMENT ----
+    @POST("payments/create")
+    Call<PaymentResponse> createPayment(@Body PaymentRequest request);
+
+    @GET("payments/status/{orderId}")
+    Call<PaymentResponse> getPaymentStatus(@Path("orderId") String orderId);
+
     // ── ADMIN: Booking management ─────────────────────────────────────────────
     @GET("admin/bookings")
     Call<List<BookingModel>> getAllAdminBookings(
