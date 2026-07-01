@@ -132,6 +132,16 @@
         android:gravity="center_vertical"
         android:elevation="12dp">
 
+        <ImageButton
+            android:id="@+id/btn_scan_face"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginEnd="8dp"
+            android:src="@android:drawable/ic_menu_camera"
+            android:background="@drawable/bg_send_button"
+            android:tint="#FFFFFF"
+            android:contentDescription="Quét khuôn mặt" />
+
         <EditText
             android:id="@+id/et_message"
             android:layout_width="0dp"

@@ -13,15 +13,29 @@ android {
         versionCode 1
         versionName "1.0"
 
-        // Emulator: 10.0.2.2  |  Điện thoại thật: IP LAN, vd 192.168.1.5
-        buildConfigField "String", "BASE_URL", '"http://192.168.1.6:8080/api/"'
+        // ============================================
+        // CHỌN 1 TRONG 3 DÒNG BÊN DƯỚI (comment 2 dòng còn lại)
+        // ============================================
+
+        // (1) EMULATOR: 10.0.2.2 là địa chỉ đặc biệt trỏ về localhost của máy host
+        buildConfigField "String", "BASE_URL", '"http://10.0.2.2:8080/api/"'
+
+        // (2) MÁY THẬT qua USB + adb forward (chạy: adb forward tcp:8080 tcp:8080)
+        // buildConfigField "String", "BASE_URL", '"http://localhost:8080/api/"'
+
+        // (3) MÁY THẬT qua WIFI cùng mạng LAN với PC
+        // buildConfigField "String", "BASE_URL", '"http://10.0.104.211:8080/api/"'
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_URL", "\"http://192.168.1.6:8080/api/\""
+
+            // Đồng bộ với defaultConfig, cũng chọn 1 trong 3
+            buildConfigField "String", "BASE_URL", '"http://10.0.2.2:8080/api/"'
+            // buildConfigField "String", "BASE_URL", '"http://localhost:8080/api/"'
+            // buildConfigField "String", "BASE_URL", '"http://10.0.104.211:8080/api/"'
         }
     }
 
@@ -67,6 +81,7 @@ dependencies {
 
     // CircleImageView — ảnh avatar tròn
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.google.mlkit:face-detection:16.1.7'
 
     // Test
     testImplementation 'junit:junit:4.13.2'
