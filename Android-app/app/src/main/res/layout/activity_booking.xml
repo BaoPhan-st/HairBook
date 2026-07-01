@@ -27,6 +27,7 @@
             android:contentDescription="Quay lại"/>
 
         <TextView
+            android:id="@+id/tv_toolbar_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -36,6 +37,18 @@
             android:textStyle="bold"
             android:layout_marginStart="8dp"/>
     </LinearLayout>
+
+    <!-- Banner hiển thị khi ở chế độ Đổi lịch: dịch vụ/thợ giữ nguyên, chỉ đổi ngày giờ -->
+    <TextView
+        android:id="@+id/tv_locked_summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F3E5F5"
+        android:textColor="#4A148C"
+        android:textSize="13sp"
+        android:padding="12dp"
+        android:visibility="gone"
+        android:text="Đổi lịch giữ nguyên dịch vụ và thợ, chỉ chọn lại ngày/giờ mới"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -49,40 +62,54 @@
             android:padding="16dp">
 
             <!-- Step 1: Chọn dịch vụ -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1. Chọn dịch vụ"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#212121"
-                android:layout_marginBottom="8dp"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_services"
+            <LinearLayout
+                android:id="@+id/layout_step_service"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2"
-                android:layout_marginBottom="20dp"/>
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1. Chọn dịch vụ"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#212121"
+                    android:layout_marginBottom="8dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_services"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
+                    android:layout_marginBottom="20dp"/>
+            </LinearLayout>
 
             <!-- Step 2: Chọn thợ -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2. Chọn thợ cắt tóc"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#212121"
-                android:layout_marginBottom="8dp"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_barbers"
+            <LinearLayout
+                android:id="@+id/layout_step_barber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:orientation="horizontal"
-                android:layout_marginBottom="20dp"/>
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2. Chọn thợ cắt tóc"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#212121"
+                    android:layout_marginBottom="8dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_barbers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="20dp"/>
+            </LinearLayout>
 
             <!-- Step 3: Chọn ngày -->
             <TextView
@@ -119,29 +146,36 @@
                 android:layout_marginBottom="20dp"/>
 
             <!-- Ghi chú -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ghi chú (tuỳ chọn)"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#212121"
-                android:layout_marginBottom="8dp"/>
-
-            <com.google.android.material.textfield.TextInputLayout
+            <LinearLayout
+                android:id="@+id/layout_step_note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="VD: Cắt ngắn hai bên, để dài trên đỉnh..."
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginBottom="24dp">
-                <EditText
-                    android:id="@+id/et_note"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ghi chú (tuỳ chọn)"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#212121"
+                    android:layout_marginBottom="8dp"/>
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:minLines="2"
-                    android:maxLines="4"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:hint="VD: Cắt ngắn hai bên, để dài trên đỉnh..."
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginBottom="24dp">
+                    <EditText
+                        android:id="@+id/et_note"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:minLines="2"
+                        android:maxLines="4"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

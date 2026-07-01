@@ -1,10 +1,13 @@
 package com.haircut.app.model;
-import com.google.gson.annotations.SerializedName;
-public class CancelRequest {
-    @SerializedName("reason") public String reason;
 
-    public CancelRequest() {}
-    public CancelRequest(String reason) {
-        this.reason = reason;
+import com.google.gson.annotations.SerializedName;
+
+public class RescheduleRequest {
+    @SerializedName("newBookingTime") public String newBookingTime;
+
+    public RescheduleRequest() {}
+
+    public RescheduleRequest(String newBookingTime) {
+        this.newBookingTime = newBookingTime;
     }
 }

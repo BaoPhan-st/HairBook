@@ -109,6 +109,9 @@ public interface ApiService {
     @PUT("admin/bookings/{id}/confirm")
     Call<BookingModel> adminConfirmBooking(@Path("id") Long bookingId);
 
+    @PUT("admin/bookings/{id}/start")
+    Call<BookingModel> adminStartBooking(@Path("id") Long bookingId);
+
     @PUT("admin/bookings/{id}/reject")
     Call<BookingModel> adminRejectBooking(@Path("id") Long bookingId, @Body CancelRequest request);
 

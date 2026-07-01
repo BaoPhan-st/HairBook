@@ -1,10 +1,13 @@
 package com.haircut.app.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +24,7 @@ import com.haircut.app.api.ApiService;
 import com.haircut.app.model.BarberModel;
 import com.haircut.app.model.BookingModel;
 import com.haircut.app.model.BookingRequest;
+import com.haircut.app.model.RescheduleRequest;
 import com.haircut.app.model.ServiceModel;
 
 import org.json.JSONObject;
@@ -35,20 +39,49 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
+/**
+ * Màn hình đặt lịch — hỗ trợ 3 chế độ:
+ *
+ *  MODE_CREATE     — đặt lịch mới bình thường.
+ *  MODE_REBOOK     — đặt lại dựa trên 1 booking cũ (COMPLETED / đã huỷ / NO_SHOW).
+ *                    Tự điền sẵn dịch vụ, thợ, ghi chú từ booking cũ, nhưng bắt
+ *                    buộc chọn lại ngày/giờ mới. Tạo booking MỚI, không đổi booking cũ.
+ *  MODE_RESCHEDULE — đổi giờ 1 booking đang PENDING/CONFIRMED. Giữ nguyên dịch vụ
+ *                    và thợ (không cho đổi), chỉ chọn lại ngày/giờ. Cập nhật booking
+ *                    hiện tại, không tạo booking mới.
+ */
 public class BookingActivity extends AppCompatActivity {
+
+    public static final String EXTRA_MODE        = "mode";
+    public static final int MODE_CREATE     = 0;
+    public static final int MODE_REBOOK     = 1;
+    public static final int MODE_RESCHEDULE = 2;
+
+    public static final String EXTRA_BOOKING_ID   = "booking_id";
+    public static final String EXTRA_BARBER_ID    = "barber_id";
+    public static final String EXTRA_BARBER_NAME  = "barber_name";
+    public static final String EXTRA_SERVICE_ID   = "service_id";
+    public static final String EXTRA_SERVICE_NAME = "service_name";
+    public static final String EXTRA_NOTE         = "note";
 
     private RecyclerView rvServices, rvBarbers, rvTimeSlots;
     private CalendarView calendarView;
     private Button btnConfirm, btnBack;
     private ProgressBar progressBar;
+    private TextView tvToolbarTitle, tvLockedSummary;
+    private View layoutStepService, layoutStepBarber, layoutStepNote;
+    private EditText etNote;
 
     private ApiService apiService;
     private Long selectedServiceId;
     private String selectedServiceName;
     private Long selectedBarberId;
+    private String selectedBarberName;
     private String selectedDate; // yyyy-MM-dd
     private String selectedSlot;
+
+    private int mode = MODE_CREATE;
+    private Long rescheduleBookingId;
 
     // Giới hạn ngày đặt lịch tối đa kể từ hôm nay
     private static final int MAX_DAYS_AHEAD = 30;
@@ -59,19 +92,34 @@ public class BookingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_booking);
         apiService = ApiClient.getService(this);
 
+        mode = getIntent().getIntExtra(EXTRA_MODE, MODE_CREATE);
+
         initViews();
-        loadServices();
-        loadBarbers();
+        applyMode();
         setupCalendar();
+
+        if (mode == MODE_RESCHEDULE) {
+            // Dịch vụ/thợ đã cố định từ intent, chỉ cần tải giờ trống.
+            loadTimeSlots();
+        } else {
+            loadServices();
+            loadBarbers();
+        }
     }
 
     private void initViews() {
-        rvServices   = findViewById(R.id.rv_services);
-        rvBarbers    = findViewById(R.id.rv_barbers);
-        rvTimeSlots  = findViewById(R.id.rv_time_slots);
-        calendarView = findViewById(R.id.calendar_view);
-        btnConfirm   = findViewById(R.id.btn_confirm_booking);
-        progressBar  = findViewById(R.id.progress_bar);
+        rvServices        = findViewById(R.id.rv_services);
+        rvBarbers         = findViewById(R.id.rv_barbers);
+        rvTimeSlots       = findViewById(R.id.rv_time_slots);
+        calendarView      = findViewById(R.id.calendar_view);
+        btnConfirm        = findViewById(R.id.btn_confirm_booking);
+        progressBar       = findViewById(R.id.progress_bar);
+        tvToolbarTitle    = findViewById(R.id.tv_toolbar_title);
+        tvLockedSummary   = findViewById(R.id.tv_locked_summary);
+        layoutStepService = findViewById(R.id.layout_step_service);
+        layoutStepBarber  = findViewById(R.id.layout_step_barber);
+        layoutStepNote    = findViewById(R.id.layout_step_note);
+        etNote            = findViewById(R.id.et_note);
 
         rvServices.setLayoutManager(new GridLayoutManager(this, 2));
         rvBarbers.setLayoutManager(
@@ -84,6 +132,62 @@ public class BookingActivity extends AppCompatActivity {
 
         btnConfirm.setOnClickListener(v -> attemptBooking());
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
+    }
+
+    private void applyMode() {
+        Intent intent = getIntent();
+
+        switch (mode) {
+            case MODE_REBOOK:
+                tvToolbarTitle.setText("Đặt lại lịch hẹn");
+                btnConfirm.setText("Xác nhận đặt lại");
+                // Prefill nhưng vẫn cho phép người dùng đổi dịch vụ/thợ nếu muốn.
+                selectedServiceId   = intent.getLongExtra(EXTRA_SERVICE_ID, -1) == -1
+                        ? null : intent.getLongExtra(EXTRA_SERVICE_ID, -1);
+                selectedServiceName = intent.getStringExtra(EXTRA_SERVICE_NAME);
+                selectedBarberId    = intent.getLongExtra(EXTRA_BARBER_ID, -1) == -1
+                        ? null : intent.getLongExtra(EXTRA_BARBER_ID, -1);
+                selectedBarberName  = intent.getStringExtra(EXTRA_BARBER_NAME);
+                String oldNote = intent.getStringExtra(EXTRA_NOTE);
+                if (oldNote != null) etNote.setText(oldNote);
+                if (selectedServiceName != null || selectedBarberName != null) {
+                    Toast.makeText(this,
+                            "Đã điền lại: " +
+                                    (selectedServiceName != null ? selectedServiceName : "") +
+                                    (selectedBarberName != null ? " - " + selectedBarberName : "") +
+                                    ". Vui lòng chọn ngày giờ mới.",
+                            Toast.LENGTH_LONG).show();
+                }
+                break;
+
+            case MODE_RESCHEDULE:
+                tvToolbarTitle.setText("Đổi lịch hẹn");
+                btnConfirm.setText("Xác nhận đổi lịch");
+                rescheduleBookingId = intent.getLongExtra(EXTRA_BOOKING_ID, -1);
+                selectedServiceId   = intent.getLongExtra(EXTRA_SERVICE_ID, -1) == -1
+                        ? null : intent.getLongExtra(EXTRA_SERVICE_ID, -1);
+                selectedServiceName = intent.getStringExtra(EXTRA_SERVICE_NAME);
+                selectedBarberId    = intent.getLongExtra(EXTRA_BARBER_ID, -1) == -1
+                        ? null : intent.getLongExtra(EXTRA_BARBER_ID, -1);
+                selectedBarberName  = intent.getStringExtra(EXTRA_BARBER_NAME);
+
+                // Đổi lịch KHÔNG cho đổi dịch vụ/thợ/ghi chú — chỉ đổi ngày giờ.
+                layoutStepService.setVisibility(View.GONE);
+                layoutStepBarber.setVisibility(View.GONE);
+                layoutStepNote.setVisibility(View.GONE);
+                tvLockedSummary.setVisibility(View.VISIBLE);
+                tvLockedSummary.setText("Giữ nguyên: " +
+                        (selectedServiceName != null ? selectedServiceName : "dịch vụ đã chọn") +
+                        " — " +
+                        (selectedBarberName != null ? selectedBarberName : "thợ đã chọn") +
+                        ". Chỉ chọn lại ngày/giờ mới.");
+                break;
+
+            default: // MODE_CREATE
+                tvToolbarTitle.setText("Đặt lịch cắt tóc");
+                btnConfirm.setText("Xác nhận đặt lịch");
+                break;
+        }
     }
 
     private void loadServices() {
@@ -121,6 +225,7 @@ public class BookingActivity extends AppCompatActivity {
                             return;
                         }
                         selectedBarberId = b.id;
+                        selectedBarberName = b.name;
                         selectedSlot = null;
                         Toast.makeText(BookingActivity.this, "Đã chọn thợ: " + b.name, Toast.LENGTH_SHORT).show();
                         loadTimeSlots();
@@ -194,23 +299,64 @@ public class BookingActivity extends AppCompatActivity {
             return;
         }
 
+        String bookingTimeIso = selectedDate + "T" + selectedSlot + ":00";
+
         progressBar.setVisibility(View.VISIBLE);
         btnConfirm.setEnabled(false);
 
+        if (mode == MODE_RESCHEDULE) {
+            doReschedule(bookingTimeIso);
+        } else {
+            doCreateBooking(bookingTimeIso);
+        }
+    }
+
+    private void doCreateBooking(String bookingTimeIso) {
         BookingRequest req = new BookingRequest();
         req.serviceId   = selectedServiceId;
         req.barberId    = selectedBarberId;
-        req.bookingTime = selectedDate + "T" + selectedSlot + ":00";
-
-        android.widget.EditText etNote = findViewById(R.id.et_note);
-        req.note = etNote.getText().toString().trim();
+        req.bookingTime = bookingTimeIso;
+        req.note        = etNote.getText().toString().trim();
 
         apiService.createBooking(req).enqueue(new Callback<BookingModel>() {
             @Override public void onResponse(Call<BookingModel> call, Response<BookingModel> resp) {
                 progressBar.setVisibility(View.GONE);
                 btnConfirm.setEnabled(true);
                 if (resp.isSuccessful()) {
-                    Toast.makeText(BookingActivity.this, "Đặt lịch thành công! ✓", Toast.LENGTH_LONG).show();
+                    Toast.makeText(BookingActivity.this,
+                            mode == MODE_REBOOK ? "Đặt lại lịch thành công! ✓" : "Đặt lịch thành công! ✓",
+                            Toast.LENGTH_LONG).show();
+                    finish();
+                } else if (resp.code() == 409) {
+                    Toast.makeText(BookingActivity.this, "Khung giờ vừa bị người khác đặt, vui lòng chọn giờ khác", Toast.LENGTH_LONG).show();
+                    selectedSlot = null;
+                    loadTimeSlots();
+                } else {
+                    Toast.makeText(BookingActivity.this, parseError(resp), Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override public void onFailure(Call<BookingModel> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                btnConfirm.setEnabled(true);
+                Toast.makeText(BookingActivity.this, "Lỗi kết nối server, vui lòng thử lại", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void doReschedule(String bookingTimeIso) {
+        if (rescheduleBookingId == null || rescheduleBookingId == -1) {
+            progressBar.setVisibility(View.GONE);
+            btnConfirm.setEnabled(true);
+            Toast.makeText(this, "Không xác định được lịch hẹn cần đổi", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        RescheduleRequest req = new RescheduleRequest(bookingTimeIso);
+        apiService.rescheduleBooking(rescheduleBookingId, req).enqueue(new Callback<BookingModel>() {
+            @Override public void onResponse(Call<BookingModel> call, Response<BookingModel> resp) {
+                progressBar.setVisibility(View.GONE);
+                btnConfirm.setEnabled(true);
+                if (resp.isSuccessful()) {
+                    Toast.makeText(BookingActivity.this, "Đổi lịch thành công! ✓", Toast.LENGTH_LONG).show();
                     finish();
                 } else if (resp.code() == 409) {
                     Toast.makeText(BookingActivity.this, "Khung giờ vừa bị người khác đặt, vui lòng chọn giờ khác", Toast.LENGTH_LONG).show();

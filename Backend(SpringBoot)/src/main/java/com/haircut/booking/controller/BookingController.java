@@ -1,11 +1,18 @@
 package com.haircut.booking.controller;
 
-import com.haircut.booking.entity.*;
-import com.haircut.booking.repository.*;
+import com.haircut.booking.dto.BookingRequestDto;
+import com.haircut.booking.dto.BookingResponse;
+import com.haircut.booking.dto.CancelRequest;
+import com.haircut.booking.dto.RescheduleRequest;
+import com.haircut.booking.entity.Booking;
+import com.haircut.booking.entity.User;
+import com.haircut.booking.repository.BookingRepository;
+import com.haircut.booking.repository.ReviewRepository;
+import com.haircut.booking.service.BookingService;
 import com.haircut.booking.service.UserService;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -19,110 +26,130 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class BookingController {
 
-    private final BookingRepository    bookingRepository;
-    private final UserService          userService;
-    private final BarberRepository     barberRepository;
-    private final ServiceRepository    serviceRepository;
-    private final ReviewRepository     reviewRepository;
+    private final BookingService    bookingService;
+    private final BookingRepository bookingRepository;
+    private final UserService       userService;
+    private final ReviewRepository  reviewRepository;
 
-    @Data
-    public static class BookingRequest {
-        private Long   barberId;
-        private Long   serviceId;
-        private String bookingTime;
-        private String note;
-    }
+    // ── Tạo booking mới ──────────────────────────────────────────────────────
 
     @PostMapping
     public ResponseEntity<?> createBooking(
-            @RequestBody BookingRequest req,
+            @RequestBody BookingRequestDto req,
             @AuthenticationPrincipal UserDetails userDetails) {
 
-        User user = userService.findByEmail(userDetails.getUsername());
-        Barber barber = barberRepository.findById(req.getBarberId()).orElse(null);
-        if (barber == null)
-            return ResponseEntity.badRequest().body(Map.of("error", "Thợ không tồn tại"));
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Chưa đăng nhập"));
+        }
 
-        HaircutService service = serviceRepository.findById(req.getServiceId())
-                .orElse(null);
-        if (service == null)
-            return ResponseEntity.badRequest().body(Map.of("error", "Dịch vụ không tồn tại"));
+        try {
+            User user = userService.findByEmail(userDetails.getUsername());
 
-        LocalDateTime bookingTime = LocalDateTime.parse(req.getBookingTime());
+            LocalDateTime bookingTime = parseDateTime(req.getBookingTime());
+            if (bookingTime == null) {
+                return ResponseEntity.badRequest()
+                        .body(Map.of("error", "Ngày giờ đặt lịch không hợp lệ"));
+            }
 
-        List<Booking> conflict = bookingRepository.findByBarberAndDate(
-                barber.getId(),
-                bookingTime.minusMinutes(1),
-                bookingTime.plusMinutes(1)
-        );
-        if (!conflict.isEmpty())
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(Map.of("error", "Khung giờ này đã được đặt, vui lòng chọn giờ khác"));
+            Booking saved = bookingService.createBooking(
+                    user, req.getBarberId(), req.getServiceId(), bookingTime, req.getNote());
 
-        Booking booking = Booking.builder()
-                .user(user)
-                .barber(barber)
-                .service(service)
-                .bookingTime(bookingTime)
-                .note(req.getNote())
-                .build();
+            return ResponseEntity.status(HttpStatus.CREATED).body(BookingResponse.from(saved));
 
-        Booking saved = bookingRepository.save(booking);
-        return ResponseEntity.status(HttpStatus.CREATED).body(toDto(saved));
+        } catch (BookingService.BadRequestException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        } catch (BookingService.NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
+        } catch (BookingService.ConflictException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Đã xảy ra lỗi không mong muốn, vui lòng thử lại"));
+        }
     }
+
+    // ── Lịch sử của khách hàng hiện tại ─────────────────────────────────────
 
     @GetMapping("/my")
-    public ResponseEntity<List<?>> getMyBookings(
-            @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<?> getMyBookings(@AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Chưa đăng nhập"));
+        }
         User user = userService.findByEmail(userDetails.getUsername());
         List<Booking> bookings = bookingRepository.findByUserOrderByCreatedAtDesc(user);
-        return ResponseEntity.ok(bookings.stream().map(this::toDto).toList());
+        return ResponseEntity.ok(bookings.stream()
+                .map(b -> BookingResponse.from(b, reviewRepository.findByBookingId(b.getId()).orElse(null)))
+                .toList());
     }
+
+    // ── Hủy booking ───────────────────────────────────────────────────────────
 
     @PutMapping("/{id}/cancel")
     public ResponseEntity<?> cancelBooking(
             @PathVariable Long id,
+            @RequestBody(required = false) CancelRequest req,
             @AuthenticationPrincipal UserDetails userDetails) {
 
-        Booking booking = bookingRepository.findById(id).orElse(null);
-        if (booking == null)
-            return ResponseEntity.notFound().build();
-
-        if (!booking.getUser().getEmail().equals(userDetails.getUsername()))
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-
-        if (booking.getStatus() == Booking.Status.CANCELLED)
-            return ResponseEntity.badRequest().body(Map.of("error", "Lịch đã được huỷ trước đó"));
-
-        booking.setStatus(Booking.Status.CANCELLED);
-        return ResponseEntity.ok(toDto(bookingRepository.save(booking)));
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Chưa đăng nhập"));
+        }
+        try {
+            User user = userService.findByEmail(userDetails.getUsername());
+            String reason = req != null ? req.getReason() : null;
+            Booking cancelled = bookingService.cancelBooking(user, id, reason);
+            return ResponseEntity.ok(BookingResponse.from(cancelled));
+        } catch (BookingService.NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
+        } catch (BookingService.ForbiddenException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", e.getMessage()));
+        } catch (BookingService.BadRequestException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
 
-    private Map<String, Object> toDto(Booking b) {
-        Review review = reviewRepository.findByBookingId(b.getId()).orElse(null);
-        return Map.of(
-                "id",          b.getId(),
-                "barber",      b.getBarber() != null ? Map.of(
-                        "id",       b.getBarber().getId(),
-                        "name",     b.getBarber().getName(),
-                        "specialty",b.getBarber().getSpecialty() != null ? b.getBarber().getSpecialty() : "",
-                        "rating",   b.getBarber().getRating() != null ? b.getBarber().getRating() : 0.0,
-                        "imageUrl", b.getBarber().getImageUrl() != null ? b.getBarber().getImageUrl() : ""
-                ) : Map.of(),
-                "service",     Map.of(
-                        "id",       b.getService().getId(),
-                        "name",     b.getService().getName(),
-                        "price",    b.getService().getPrice() != null ? b.getService().getPrice() : 0.0,
-                        "durationMinutes", b.getService().getDurationMinutes() != null ? b.getService().getDurationMinutes() : 0
-                ),
-                "bookingTime", b.getBookingTime().toString(),
-                "status",      b.getStatus().name(),
-                "note",        b.getNote() != null ? b.getNote() : "",
-                "createdAt",   b.getCreatedAt().toString(),
-                "review",      review != null ? Map.of(
-                        "rating",  review.getRating(),
-                        "comment", review.getComment() != null ? review.getComment() : ""
-                ) : Map.of()
-        );
+    // ── Đổi lịch (reschedule) ────────────────────────────────────────────────
+
+    @PutMapping("/{id}/reschedule")
+    public ResponseEntity<?> rescheduleBooking(
+            @PathVariable Long id,
+            @RequestBody RescheduleRequest req,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Chưa đăng nhập"));
+        }
+        try {
+            User user = userService.findByEmail(userDetails.getUsername());
+            LocalDateTime newTime = parseDateTime(req.getNewBookingTime());
+            if (newTime == null) {
+                return ResponseEntity.badRequest()
+                        .body(Map.of("error", "Ngày giờ mới không hợp lệ"));
+            }
+            Booking updated = bookingService.rescheduleBooking(user, id, newTime);
+            return ResponseEntity.ok(BookingResponse.from(updated));
+        } catch (BookingService.NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
+        } catch (BookingService.ForbiddenException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", e.getMessage()));
+        } catch (BookingService.ConflictException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("error", e.getMessage()));
+        } catch (BookingService.BadRequestException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    // ── Helper ────────────────────────────────────────────────────────────────
+
+    private LocalDateTime parseDateTime(String raw) {
+        if (raw == null || raw.isBlank()) return null;
+        try {
+            return LocalDateTime.parse(raw);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

@@ -45,8 +45,9 @@ public class AdminBookingActivity extends AppCompatActivity {
     private List<BookingModel> allBookings = new ArrayList<>();
     private String selectedDate = null; // null = không lọc ngày, "yyyy-MM-dd" = lọc theo ngày
 
-    // Tab: 0 Tất cả | 1 Chờ xác nhận | 2 Đã xác nhận | 3 Hoàn thành | 4 Đã huỷ
-    private static final String[] TAB_STATUSES = {null, "PENDING", "CONFIRMED", "COMPLETED", null};
+    // Tab: 0 Tất cả | 1 Chờ xác nhận | 2 Đã xác nhận | 3 Đang thực hiện | 4 Hoàn thành | 5 Đã huỷ
+    private static final String[] TAB_STATUSES = {null, "PENDING", "CONFIRMED", "IN_PROGRESS", "COMPLETED", null};
+    private static final int TAB_CANCELLED = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,7 @@ public class AdminBookingActivity extends AppCompatActivity {
         adapter = new AdminBookingAdapter(new ArrayList<>(), new AdminBookingAdapter.ActionListener() {
             @Override public void onConfirm(BookingModel b)  { confirmDialog(b); }
             @Override public void onReject(BookingModel b)   { rejectDialog(b); }
+            @Override public void onStart(BookingModel b)    { startDialog(b); }
             @Override public void onComplete(BookingModel b) { completeDialog(b); }
             @Override public void onNoShow(BookingModel b)   { noShowDialog(b); }
         });
@@ -132,7 +134,7 @@ public class AdminBookingActivity extends AppCompatActivity {
         List<BookingModel> filtered = allBookings.stream()
                 .filter(b -> {
                     // Filter theo tab
-                    if (pos == 4) {
+                    if (pos == TAB_CANCELLED) {
                         boolean cancelled = "CANCELLED_BY_CUSTOMER".equals(b.status)
                                 || "CANCELLED_BY_SALON".equals(b.status)
                                 || "NO_SHOW".equals(b.status);
@@ -210,6 +212,15 @@ public class AdminBookingActivity extends AppCompatActivity {
                 .show();
     }
 
+    private void startDialog(BookingModel b) {
+        new AlertDialog.Builder(this)
+                .setTitle("Bắt đầu thực hiện")
+                .setMessage("Chuyển lịch hẹn này sang trạng thái Đang thực hiện?\n\n" + formatBookingInfo(b))
+                .setPositiveButton("Bắt đầu", (d, w) -> doStart(b))
+                .setNegativeButton("Đóng", null)
+                .show();
+    }
+
     private void completeDialog(BookingModel b) {
         new AlertDialog.Builder(this)
                 .setTitle("Đánh dấu hoàn thành")
@@ -251,6 +262,22 @@ public class AdminBookingActivity extends AppCompatActivity {
             @Override public void onResponse(Call<BookingModel> c, Response<BookingModel> resp) {
                 if (resp.isSuccessful()) {
                     Toast.makeText(AdminBookingActivity.this, "Đã từ chối lịch hẹn", Toast.LENGTH_SHORT).show();
+                    loadBookings();
+                } else {
+                    Toast.makeText(AdminBookingActivity.this, parseError(resp), Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override public void onFailure(Call<BookingModel> c, Throwable t) {
+                Toast.makeText(AdminBookingActivity.this, "Lỗi kết nối", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void doStart(BookingModel b) {
+        apiService.adminStartBooking(b.id).enqueue(new Callback<BookingModel>() {
+            @Override public void onResponse(Call<BookingModel> c, Response<BookingModel> resp) {
+                if (resp.isSuccessful()) {
+                    Toast.makeText(AdminBookingActivity.this, "Đã chuyển sang Đang thực hiện", Toast.LENGTH_SHORT).show();
                     loadBookings();
                 } else {
                     Toast.makeText(AdminBookingActivity.this, parseError(resp), Toast.LENGTH_LONG).show();

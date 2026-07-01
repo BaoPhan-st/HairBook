@@ -20,6 +20,7 @@ public class BookingResponse {
     private String updatedAt;
     private String cancelledAt;
     private String cancelReason;
+    private ReviewInfo review;
 
     // ── Inner classes ──────────────────────────────────────────────────────────
 
@@ -48,9 +49,21 @@ public class BookingResponse {
         private Integer durationMinutes;
     }
 
+    @Data @Builder
+    public static class ReviewInfo {
+        private int rating;
+        private String comment;
+    }
+
     // ── Static factory ─────────────────────────────────────────────────────────
 
+    /** Map booking, không kèm review (dùng cho các màn hình không cần hiển thị đánh giá). */
     public static BookingResponse from(Booking b) {
+        return from(b, null);
+    }
+
+    /** Map booking kèm review (nếu có) — dùng cho lịch sử khách hàng. */
+    public static BookingResponse from(Booking b, com.haircut.booking.entity.Review review) {
         return BookingResponse.builder()
                 .id(b.getId())
                 // Customer
@@ -83,6 +96,10 @@ public class BookingResponse {
                 .updatedAt(b.getUpdatedAt() != null ? b.getUpdatedAt().toString() : null)
                 .cancelledAt(b.getCancelledAt() != null ? b.getCancelledAt().toString() : null)
                 .cancelReason(b.getCancelReason())
+                .review(review != null ? ReviewInfo.builder()
+                                         .rating(review.getRating())
+                                         .comment(review.getComment() != null ? review.getComment() : "")
+                                         .build() : null)
                 .build();
     }
 }
