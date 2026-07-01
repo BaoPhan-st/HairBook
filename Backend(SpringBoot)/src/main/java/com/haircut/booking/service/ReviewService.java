@@ -1,22 +1,29 @@
 package com.haircut.booking.service;
 
+import com.haircut.booking.entity.Barber;
 import com.haircut.booking.entity.Booking;
 import com.haircut.booking.entity.Review;
 import com.haircut.booking.entity.User;
+import com.haircut.booking.repository.BarberRepository;
 import com.haircut.booking.repository.BookingRepository;
 import com.haircut.booking.repository.ReviewRepository;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Map;
 import java.util.Optional;
-
+import com.haircut.booking.service.UserService;
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final BookingRepository bookingRepository;
+    private final BarberRepository barberRepository;
     private final UserService userService;
 
     public Map<String, Object> submitReview(Long bookingId, int rating, String comment, String email) {
@@ -31,20 +38,30 @@ public class ReviewService {
         if (booking.getStatus() != Booking.Status.COMPLETED)
             throw new IllegalArgumentException("Chỉ có thể đánh giá booking đã hoàn thành");
 
-        if (reviewRepository.existsByBookingId(bookingId))
-            throw new IllegalArgumentException("Booking này đã được đánh giá");
-
         if (rating < 1 || rating > 5)
             throw new IllegalArgumentException("Rating phải từ 1 đến 5");
 
-        Review review = Review.builder()
-                .booking(booking)
-                .user(user)
-                .rating(rating)
-                .comment(comment)
-                .build();
+        Review review = reviewRepository.findByBookingId(bookingId)
+                .orElseGet(() -> Review.builder().booking(booking).user(user).build());
 
-        return toDto(reviewRepository.save(review));
+        review.setRating(rating);
+        review.setComment(comment);
+
+        Map<String, Object> dto = toDto(reviewRepository.save(review));
+
+        // Cập nhật lại điểm rating trung bình của barber ngay sau khi lưu review
+        updateBarberRating(booking.getBarber());
+
+        return dto;
+    }
+
+    private void updateBarberRating(Barber barber) {
+        if (barber == null) return;
+        Double avg = reviewRepository.findAverageRatingByBarberId(barber.getId());
+        double rounded = avg == null ? 0.0
+                : BigDecimal.valueOf(avg).setScale(1, RoundingMode.HALF_UP).doubleValue();
+        barber.setRating(rounded);
+        barberRepository.save(barber);
     }
 
     public Map<String, Object> getReviewByBooking(Long bookingId) {
@@ -55,10 +72,10 @@ public class ReviewService {
 
     private Map<String, Object> toDto(Review r) {
         return Map.of(
-                "id",        r.getId(),
+                "id", r.getId(),
                 "bookingId", r.getBooking().getId(),
-                "rating",    r.getRating(),
-                "comment",   r.getComment() != null ? r.getComment() : "",
+                "rating", r.getRating(),
+                "comment", r.getComment() != null ? r.getComment() : "",
                 "createdAt", r.getCreatedAt().toString()
         );
     }
