@@ -4,9 +4,16 @@ import com.haircut.app.admin.AdminUserModel;
 import com.haircut.app.admin.DashboardStatsModel;
 import com.haircut.app.model.AuthResponse;
 import com.haircut.app.model.BarberModel;
+import com.haircut.app.model.BarberRequest;
+import com.haircut.app.model.BarberScheduleModel;
+import com.haircut.app.model.BarberScheduleRequest;
+import com.haircut.app.model.BarberBookingModel;
 import com.haircut.app.model.BookingModel;
 import com.haircut.app.model.BookingRequest;
 import com.haircut.app.model.CancelRequest;
+import com.haircut.app.model.PaymentRequest;
+import com.haircut.app.model.PaymentResponse;
+import com.haircut.app.model.RescheduleRequest;
 import com.haircut.app.model.ChatRequest;
 import com.haircut.app.model.ChatResponse;
 import com.haircut.app.model.LoginRequest;
@@ -18,8 +25,6 @@ import com.haircut.app.model.ReviewModel;
 import com.haircut.app.model.ReviewRequest;
 import com.haircut.app.model.ServiceModel;
 import com.haircut.app.model.UserModel;
-import com.haircut.app.model.BarberRequest;
-import com.haircut.app.model.BarberBookingModel;
 
 import java.util.List;
 import java.util.Map;
@@ -49,11 +54,10 @@ public interface ApiService {
 
     @GET("barbers/{id}/available-slots")
     Call<List<String>> getAvailableSlots(
-            @Path("id") Long barberId,
-            @Query("date") String date,
-            @Query("serviceId") Long serviceId
+        @Path("id") Long barberId,
+        @Query("date") String date,
+        @Query("serviceId") Long serviceId
     );
-
 
     @GET("barbers/{id}")
     Call<BarberModel> getBarberById(@Path("id") Long id);
@@ -70,9 +74,27 @@ public interface ApiService {
     @GET("barbers/{id}/bookings")
     Call<List<BarberBookingModel>> getBarberBookings(@Path("id") Long id, @Query("date") String date);
 
+    // ── BARBER SCHEDULES ──────────────────────────────────────────────────────
+    @GET("barbers/{id}/schedules")
+    Call<List<BarberScheduleModel>> getBarberSchedules(
+            @Path("id") Long barberId,
+            @Query("from") String from,
+            @Query("to") String to
+    );
+
+    @POST("barbers/{id}/schedules")
+    Call<BarberScheduleModel> setBarberSchedule(
+            @Path("id") Long barberId,
+            @Body BarberScheduleRequest body
+    );
+
+    @DELETE("barbers/{id}/schedules")
+    Call<Void> deleteBarberSchedule(
+            @Path("id") Long barberId,
+            @Query("date") String date
+    );
 
     // ── BOOKINGS ──────────────────────────────────────────────────────────────
-
     @POST("bookings")
     Call<BookingModel> createBooking(@Body BookingRequest request);
 
@@ -80,23 +102,23 @@ public interface ApiService {
     Call<List<BookingModel>> getMyBookings();
 
     @PUT("bookings/{id}/cancel")
-    Call<BookingModel> cancelBooking(@Path("id") Long bookingId, @Body CancelRequest request);
+    Call<BookingModel> cancelBooking(@Path("id") Long bookingId, @Body CancelRequest body);
 
     @PUT("bookings/{id}/reschedule")
-    Call<BookingModel> rescheduleBooking(@Path("id") Long bookingId, @Body RescheduleRequest request);
+    Call<BookingModel> rescheduleBooking(@Path("id") Long bookingId, @Body RescheduleRequest body);
 
     // ── AI CHAT ───────────────────────────────────────────────────────────────
     @POST("ai/chat")
     Call<ChatResponse> sendChatMessage(@Body ChatRequest request);
 
-    // ---- REVIEW ----
+    // ── REVIEW ────────────────────────────────────────────────────────────────
     @POST("reviews")
     Call<ReviewModel> submitReview(@Body ReviewRequest request);
 
     @GET("reviews/booking/{bookingId}")
     Call<ReviewModel> getReviewByBooking(@Path("bookingId") Long bookingId);
 
-    // ---- PAYMENT ----
+    // ── PAYMENT ───────────────────────────────────────────────────────────────
     @POST("payments/create")
     Call<PaymentResponse> createPayment(@Body PaymentRequest request);
 

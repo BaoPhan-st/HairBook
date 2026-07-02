@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -23,6 +24,7 @@ public class BookingService {
     private final BookingRepository bookingRepository;
     private final BarberRepository barberRepository;
     private final ServiceRepository serviceRepository;
+    private final BarberScheduleService barberScheduleService;
 
     /** Giờ mở cửa / đóng cửa salon dùng để sinh slot. */
     public static final LocalTime OPEN_TIME  = LocalTime.of(8, 0);
@@ -73,6 +75,10 @@ public class BookingService {
                 .orElseThrow(() -> new NotFoundException("Dịch vụ không tồn tại"));
 
         validateBookingTime(startTime);
+     // Check thợ có lịch làm ngày này không
+        if (!barberScheduleService.isWorkingAt(barberId, startTime.toLocalDate(), startTime.toLocalTime())) {
+            throw new BadRequestException("Thợ không làm việc vào khung giờ này");
+        }
 
         LocalDateTime endTime = startTime.plusMinutes(durationOf(service));
 
@@ -149,6 +155,13 @@ public class BookingService {
         }
 
         validateBookingTime(newStartTime);
+     // Check thợ có lịch làm ngày mới không
+        if (!barberScheduleService.isWorkingAt(
+                booking.getBarber().getId(),
+                newStartTime.toLocalDate(),
+                newStartTime.toLocalTime())) {
+            throw new BadRequestException("Thợ không làm việc vào khung giờ này");
+        }
 
         int duration = durationOf(booking.getService());
         LocalDateTime newEndTime = newStartTime.plusMinutes(duration);
@@ -169,6 +182,14 @@ public class BookingService {
         barberRepository.findById(barberId)
                 .orElseThrow(() -> new NotFoundException("Thợ không tồn tại"));
 
+        // Lấy lịch làm việc của thợ ngày đó
+        var scheduleOpt = barberScheduleService.getScheduleForDate(barberId, date);
+        if (scheduleOpt.isEmpty()) {
+            return java.util.List.of(); // thợ không làm ngày này
+        }
+        LocalTime openTime  = scheduleOpt.get().getStartTime();
+        LocalTime closeTime = scheduleOpt.get().getEndTime();
+
         int duration = 30;
         if (serviceId != null) {
             HaircutService service = serviceRepository.findById(serviceId)
@@ -185,19 +206,15 @@ public class BookingService {
         boolean isToday = date.isEqual(LocalDate.now());
 
         java.util.List<String> result = new java.util.ArrayList<>();
-        LocalTime cursor = OPEN_TIME;
+        LocalTime cursor = openTime;
 
         while (true) {
             LocalDateTime slotStart = date.atTime(cursor);
             LocalDateTime slotEnd = slotStart.plusMinutes(duration);
 
-            // Slot phải kết thúc trước giờ đóng cửa
-            if (slotEnd.toLocalTime().isAfter(CLOSE_TIME) && !slotEnd.toLocalTime().equals(CLOSE_TIME)) {
-                break;
-            }
-            if (slotEnd.isAfter(date.atTime(CLOSE_TIME))) {
-                break;
-            }
+            // Slot phải kết thúc trước hoặc đúng giờ đóng cửa của thợ
+            if (slotEnd.toLocalTime().isAfter(closeTime)) break;
+            if (slotEnd.isAfter(date.atTime(closeTime))) break;
 
             boolean isPast = isToday && !slotStart.isAfter(now);
             boolean overlaps = existing.stream().anyMatch(b ->

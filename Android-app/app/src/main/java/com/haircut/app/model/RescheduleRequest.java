@@ -3,7 +3,8 @@ package com.haircut.app.model;
 import com.google.gson.annotations.SerializedName;
 
 public class RescheduleRequest {
-    @SerializedName("newBookingTime") public String newBookingTime;
+    @SerializedName("newBookingTime")
+    public String newBookingTime;
 
     public RescheduleRequest() {}
 
